@@ -7,22 +7,22 @@ import 'package:tiktok_clone/features/authentication/widgets/auth_button.dart';
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
 
-  void onSignUpTap(BuildContext context) {
+  void _onSignUpTap(BuildContext context) {
     Navigator.of(context).pop();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: const SafeArea(
+      body: SafeArea(
         child: Padding(
-          padding: EdgeInsets.symmetric(
+          padding: const EdgeInsets.symmetric(
             horizontal: Sizes.size40,
           ),
           child: Column(
             children: [
               Gaps.v80,
-              Text(
+              const Text(
                 'Log in to TikTok',
                 style: TextStyle(
                   fontSize: Sizes.size28,
@@ -30,7 +30,7 @@ class LoginScreen extends StatelessWidget {
                 ),
               ),
               Gaps.v20,
-              Text(
+              const Text(
                 'Manage your account, check notifications, comment on videos, and more.',
                 style: TextStyle(
                   fontSize: Sizes.size16,
@@ -40,20 +40,23 @@ class LoginScreen extends StatelessWidget {
               ),
               Gaps.v40,
               AuthButton(
-                  icon: FaIcon(FontAwesomeIcons.user),
-                  text: "Use email & password"),
+                icon: const FaIcon(FontAwesomeIcons.user),
+                text: "Use email & password",
+                onTap: () {},
+              ),
               Gaps.v16,
               AuthButton(
                 text: "Continue with Apple",
-                icon: FaIcon(FontAwesomeIcons.apple),
+                icon: const FaIcon(FontAwesomeIcons.apple),
+                onTap: () {},
               ),
             ],
           ),
         ),
       ),
       bottomNavigationBar: BottomAppBar(
-        color: Colors.grey.shade100,
-        elevation: 1,
+        color: Colors.grey.shade50,
+        elevation: 2,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -62,7 +65,7 @@ class LoginScreen extends StatelessWidget {
             TextButton(
               onPressed: () {},
               child: GestureDetector(
-                onTap: () => onSignUpTap(context),
+                onTap: () => _onSignUpTap(context),
                 child: Text(
                   "Sign up",
                   style: TextStyle(
