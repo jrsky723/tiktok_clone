@@ -1,9 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
+import 'package:tiktok_clone/features/authentication/login_screen.dart';
+import 'package:tiktok_clone/features/authentication/widgets/auth_button.dart';
 
 class SignUpScreen extends StatelessWidget {
   const SignUpScreen({super.key});
+
+  void onLoginTap(BuildContext context) {
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (context) => const LoginScreen(),
+    ));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +25,7 @@ class SignUpScreen extends StatelessWidget {
             children: [
               Gaps.v80,
               Text(
-                'Sign Up Screen',
+                'Sign Up to TikTok',
                 style: TextStyle(
                   fontSize: Sizes.size28,
                   fontWeight: FontWeight.w700,
@@ -32,6 +40,9 @@ class SignUpScreen extends StatelessWidget {
                 ),
                 textAlign: TextAlign.center,
               ),
+              Gaps.v40,
+              AuthButton(text: "Use phone or email"),
+              AuthButton(text: "Continue with Apple"),
             ],
           ),
         ),
@@ -39,17 +50,15 @@ class SignUpScreen extends StatelessWidget {
       bottomNavigationBar: BottomAppBar(
         color: Colors.grey.shade100,
         elevation: 1,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(
-            vertical: Sizes.size20,
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Text("Already have an account?"),
-              Gaps.h5,
-              TextButton(
-                onPressed: () {},
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Text("Already have an account?"),
+            Gaps.h5,
+            TextButton(
+              onPressed: () {},
+              child: GestureDetector(
+                onTap: () => onLoginTap(context),
                 child: Text(
                   "Log in",
                   style: TextStyle(
@@ -58,8 +67,8 @@ class SignUpScreen extends StatelessWidget {
                   ),
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
