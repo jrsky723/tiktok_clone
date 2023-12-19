@@ -14,7 +14,7 @@ class EmailScreen extends StatefulWidget {
 class _EmailScreenState extends State<EmailScreen> {
   final TextEditingController _emailController = TextEditingController();
 
-  String _email = '';
+  String _email = "";
 
   @override
   void initState() {
@@ -64,7 +64,7 @@ class _EmailScreenState extends State<EmailScreen> {
         backgroundColor: Colors.white,
         appBar: AppBar(
           title: const Text(
-            'Sign up',
+            "Sign up",
           ),
         ),
         body: Padding(

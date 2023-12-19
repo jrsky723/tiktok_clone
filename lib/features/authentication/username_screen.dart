@@ -14,7 +14,7 @@ class UsernameScreen extends StatefulWidget {
 class _UsernameScreenState extends State<UsernameScreen> {
   final TextEditingController _usernameController = TextEditingController();
 
-  String _username = '';
+  String _username = "";
 
   @override
   void initState() {
@@ -47,7 +47,7 @@ class _UsernameScreenState extends State<UsernameScreen> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         title: const Text(
-          'Sign up',
+          "Sign up",
         ),
       ),
       body: Padding(
@@ -59,7 +59,7 @@ class _UsernameScreenState extends State<UsernameScreen> {
           children: [
             Gaps.v40,
             const Text(
-              'Create username',
+              "Create username",
               style: TextStyle(
                 fontSize: Sizes.size24,
                 fontWeight: FontWeight.w700,
@@ -67,7 +67,7 @@ class _UsernameScreenState extends State<UsernameScreen> {
             ),
             Gaps.v8,
             const Text(
-              'You can always change this later.',
+              "You can always change this later.",
               style: TextStyle(
                 fontSize: Sizes.size16,
                 color: Colors.black54,
@@ -77,7 +77,7 @@ class _UsernameScreenState extends State<UsernameScreen> {
             TextField(
               controller: _usernameController,
               decoration: InputDecoration(
-                hintText: 'Username',
+                hintText: "Username",
                 enabledBorder: UnderlineInputBorder(
                   borderSide: BorderSide(
                     color: Colors.grey.shade400,

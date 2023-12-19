@@ -23,7 +23,7 @@ class LoginScreen extends StatelessWidget {
             children: [
               Gaps.v80,
               const Text(
-                'Log in to TikTok',
+                "Log in to TikTok",
                 style: TextStyle(
                   fontSize: Sizes.size28,
                   fontWeight: FontWeight.w700,
@@ -31,7 +31,7 @@ class LoginScreen extends StatelessWidget {
               ),
               Gaps.v20,
               const Text(
-                'Manage your account, check notifications, comment on videos, and more.',
+                "Manage your account, check notifications, comment on videos, and more.",
                 style: TextStyle(
                   fontSize: Sizes.size16,
                   color: Colors.black45,
