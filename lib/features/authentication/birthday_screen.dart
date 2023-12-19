@@ -88,11 +88,10 @@ class _BirthdayScreenState extends State<BirthdayScreen> {
               cursorColor: Theme.of(context).primaryColor,
             ),
             Gaps.v28,
-            GestureDetector(
+            FormButton(
+              disabled: false,
+              text: "Next",
               onTap: _onNextTap,
-              child: const FormButton(
-                disabled: false,
-              ),
             ),
           ],
         ),

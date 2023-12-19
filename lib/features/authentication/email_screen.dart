@@ -46,7 +46,7 @@ class _EmailScreenState extends State<EmailScreen> {
     FocusScope.of(context).unfocus();
   }
 
-  void _onSubmit() {
+  void _onNextTap() {
     if (_email.isEmpty || _isEmailValid() != null) return;
     Navigator.push(
       context,
@@ -86,7 +86,7 @@ class _EmailScreenState extends State<EmailScreen> {
               TextField(
                 controller: _emailController,
                 keyboardType: TextInputType.emailAddress,
-                onEditingComplete: _onSubmit,
+                onEditingComplete: _onNextTap,
                 autocorrect: false,
                 decoration: InputDecoration(
                   hintText: "Email",
@@ -105,12 +105,11 @@ class _EmailScreenState extends State<EmailScreen> {
                 cursorColor: Theme.of(context).primaryColor,
               ),
               Gaps.v28,
-              GestureDetector(
-                onTap: _onSubmit,
-                child: FormButton(
-                  disabled: _email.isEmpty || _isEmailValid() != null,
-                ),
-              )
+              FormButton(
+                disabled: _email.isEmpty || _isEmailValid() != null,
+                text: "Next",
+                onTap: _onNextTap,
+              ),
             ],
           ),
         ),
