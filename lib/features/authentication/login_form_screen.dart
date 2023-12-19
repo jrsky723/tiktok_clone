@@ -26,70 +26,79 @@ class _LoginFormScreenState extends State<LoginFormScreen> {
     }
   }
 
+  void _onScreenTap() {
+    FocusScope.of(context).unfocus();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("Log in"),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: Sizes.size36,
+    return GestureDetector(
+      onTap: _onScreenTap,
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text("Log in"),
         ),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            children: [
-              TextFormField(
-                  decoration: InputDecoration(
-                    hintText: "Email",
-                    enabledBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Colors.grey.shade400,
+        body: Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: Sizes.size36,
+          ),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              children: [
+                TextFormField(
+                    decoration: InputDecoration(
+                      hintText: "Email",
+                      enabledBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Colors.grey.shade400,
+                        ),
+                      ),
+                      focusedBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Theme.of(context).primaryColor,
+                        ),
                       ),
                     ),
-                    focusedBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Theme.of(context).primaryColor,
+                    cursorColor: Theme.of(context).primaryColor,
+                    validator: (value) {
+                      if (value != null && value.isEmpty) {
+                        return "Please enter your email";
+                      }
+                      return null;
+                    },
+                    onSaved: (newValue) {
+                      if (newValue != null) _formData["email"] = newValue;
+                    }),
+                Gaps.v16,
+                TextFormField(
+                    decoration: InputDecoration(
+                      hintText: "Password",
+                      enabledBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Colors.grey.shade400,
+                        ),
+                      ),
+                      focusedBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Theme.of(context).primaryColor,
+                        ),
                       ),
                     ),
-                  ),
-                  validator: (value) {
-                    if (value != null && value.isEmpty) {
-                      return "Please enter your email";
-                    }
-                    return null;
-                  },
-                  onSaved: (newValue) {
-                    if (newValue != null) _formData["email"] = newValue;
-                  }),
-              Gaps.v16,
-              TextFormField(
-                  decoration: InputDecoration(
-                    hintText: "Password",
-                    enabledBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Colors.grey.shade400,
-                      ),
-                    ),
-                    focusedBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Theme.of(context).primaryColor,
-                      ),
-                    ),
-                  ),
-                  validator: (value) {
-                    if (value != null && value.isEmpty) {
-                      return "Please write your password";
-                    }
-                    return null;
-                  },
-                  onSaved: (newValue) {
-                    if (newValue != null) _formData["password"] = newValue;
-                  }),
-              Gaps.v28,
-              FormButton(disabled: false, text: "Log in", onTap: _onLoginTap),
-            ],
+                    cursorColor: Theme.of(context).primaryColor,
+                    validator: (value) {
+                      if (value != null && value.isEmpty) {
+                        return "Please write your password";
+                      }
+                      return null;
+                    },
+                    onSaved: (newValue) {
+                      if (newValue != null) _formData["password"] = newValue;
+                    }),
+                Gaps.v28,
+                FormButton(disabled: false, text: "Log in", onTap: _onLoginTap),
+              ],
+            ),
           ),
         ),
       ),
