@@ -63,9 +63,8 @@ class LoginScreen extends StatelessWidget {
           ),
         ),
       ),
-      bottomNavigationBar: BottomAppBar(
+      bottomNavigationBar: Container(
         color: Colors.grey.shade50,
-        elevation: 2,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [

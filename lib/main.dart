@@ -34,8 +34,11 @@ class TikTokApp extends StatelessWidget {
         bottomAppBarTheme: const BottomAppBarTheme(
           surfaceTintColor: Colors.white,
         ),
+        bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+          backgroundColor: Colors.white,
+        ),
       ),
-      home: const InterestsScreen(),
+      home: const SignUpScreen(),
     );
   }
 }

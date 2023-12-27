@@ -3,6 +3,7 @@ import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/features/authentication/widgets/form_button.dart';
 import 'package:tiktok_clone/features/authentication/widgets/interest_button.dart';
+import 'package:tiktok_clone/features/onboarding/tutorial_screen.dart';
 
 const interests = [
   "Daily Life",
@@ -70,6 +71,15 @@ class _InterestsScreenState extends State<InterestsScreen> {
     }
   }
 
+  void _onNextTap() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const TutorialScreen(),
+      ),
+    );
+  }
+
   @override
   void initState() {
     super.initState();
@@ -133,10 +143,10 @@ class _InterestsScreenState extends State<InterestsScreen> {
           ),
         ),
       ),
-      bottomNavigationBar: BottomAppBar(
-        height: 130,
-        elevation: 1,
-        child: Padding(
+      bottomNavigationBar: PhysicalModel(
+        color: Colors.white,
+        elevation: 20,
+        child: Container(
           padding: const EdgeInsets.only(
             bottom: Sizes.size40,
             top: Sizes.size16,
@@ -146,7 +156,7 @@ class _InterestsScreenState extends State<InterestsScreen> {
           child: FormButton(
             disabled: false,
             text: "Next",
-            onTap: () {},
+            onTap: _onNextTap,
           ),
         ),
       ),

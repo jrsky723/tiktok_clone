@@ -68,9 +68,8 @@ class SignUpScreen extends StatelessWidget {
           ),
         ),
       ),
-      bottomNavigationBar: BottomAppBar(
+      bottomNavigationBar: Container(
         color: Colors.grey.shade50,
-        elevation: 1,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
