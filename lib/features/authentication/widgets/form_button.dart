@@ -38,6 +38,9 @@ class FormButton extends StatelessWidget {
             ),
             child: Text(
               text,
+              style: const TextStyle(
+                fontSize: Sizes.size16,
+              ),
               textAlign: TextAlign.center,
             ),
           ),
