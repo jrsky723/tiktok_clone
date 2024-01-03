@@ -7,7 +7,6 @@ import 'package:visibility_detector/visibility_detector.dart';
 class VideoPost extends StatefulWidget {
   final VoidCallback onVideoFinished;
   final int index;
-
   const VideoPost({
     super.key,
     required this.onVideoFinished,
