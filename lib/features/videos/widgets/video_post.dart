@@ -126,6 +126,7 @@ class _VideoPostState extends State<VideoPost>
       context: context,
       builder: (context) => const VideoComments(),
       backgroundColor: Colors.transparent,
+      isScrollControlled: true,
     );
     _onTogglePause();
   }
