@@ -162,38 +162,38 @@ class _VideoCommentsState extends State<VideoComments> {
                                 horizontal: Sizes.size10,
                               ),
                               suffixIcon: Padding(
-                                  padding: const EdgeInsets.only(
-                                    right: Sizes.size10,
-                                  ),
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      FaIcon(
-                                        FontAwesomeIcons.at,
-                                        color: Colors.grey.shade900,
-                                      ),
-                                      Gaps.h14,
-                                      FaIcon(
-                                        FontAwesomeIcons.gift,
-                                        color: Colors.grey.shade900,
-                                      ),
-                                      Gaps.h14,
-                                      FaIcon(
-                                        FontAwesomeIcons.faceSmile,
-                                        color: Colors.grey.shade900,
-                                      ),
-                                      Gaps.h14,
-                                      if (_isWriting)
-                                        GestureDetector(
-                                          onTap: _stopWriting,
-                                          child: FaIcon(
-                                            FontAwesomeIcons.circleArrowUp,
-                                            color:
-                                                Theme.of(context).primaryColor,
-                                          ),
+                                padding: const EdgeInsets.only(
+                                  right: Sizes.size10,
+                                ),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    FaIcon(
+                                      FontAwesomeIcons.at,
+                                      color: Colors.grey.shade900,
+                                    ),
+                                    Gaps.h14,
+                                    FaIcon(
+                                      FontAwesomeIcons.gift,
+                                      color: Colors.grey.shade900,
+                                    ),
+                                    Gaps.h14,
+                                    FaIcon(
+                                      FontAwesomeIcons.faceSmile,
+                                      color: Colors.grey.shade900,
+                                    ),
+                                    Gaps.h14,
+                                    if (_isWriting)
+                                      GestureDetector(
+                                        onTap: _stopWriting,
+                                        child: FaIcon(
+                                          FontAwesomeIcons.circleArrowUp,
+                                          color: Theme.of(context).primaryColor,
                                         ),
-                                    ],
-                                  )),
+                                      ),
+                                  ],
+                                ),
+                              ),
                             ),
                           ),
                         ),

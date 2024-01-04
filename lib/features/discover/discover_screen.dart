@@ -34,6 +34,14 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
     print("Search submitted: $value");
   }
 
+  void _onTapChanged(int index) {
+    FocusScope.of(context).unfocus();
+  }
+
+  void _onClearTapped() {
+    _textEditingController.clear();
+  }
+
   @override
   void dispose() {
     _textEditingController.dispose();
@@ -48,11 +56,105 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
           elevation: 1,
-          title: CupertinoSearchTextField(
+          title: TextField(
             controller: _textEditingController,
             onChanged: _onSearchChanged,
             onSubmitted: _onSearchSubmitted,
+            decoration: InputDecoration(
+              hintText: "Search",
+              prefixIcon: const Padding(
+                padding: EdgeInsets.only(
+                  left: Sizes.size10,
+                  top: Sizes.size14,
+                ),
+                child: FaIcon(
+                  FontAwesomeIcons.magnifyingGlass,
+                  color: Colors.grey,
+                  size: Sizes.size20,
+                ),
+              ),
+              suffixIcon: Padding(
+                padding: const EdgeInsets.only(
+                  right: Sizes.size10,
+                  top: Sizes.size14,
+                ),
+                child: GestureDetector(
+                  onTap: _onClearTapped,
+                  child: const FaIcon(
+                    FontAwesomeIcons.solidCircleXmark,
+                    color: Colors.black45,
+                    size: Sizes.size20,
+                  ),
+                ),
+              ),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(
+                  Sizes.size12,
+                ),
+                borderSide: BorderSide.none,
+              ),
+              filled: true,
+              fillColor: Colors.grey.shade100,
+            ),
           ),
+          // title: TextField(
+          //                   onTap: _onStartWriting,
+          //                   expands: true,
+          //                   minLines: null,
+          //                   maxLines: null,
+          //                   textInputAction: TextInputAction.newline,
+          //                   cursorColor: Theme.of(context).primaryColor,
+          //                   decoration: InputDecoration(
+          //                     hintText: "Add comment...",
+          //                     hintStyle: TextStyle(
+          //                       color: Colors.grey.shade500,
+          //                     ),
+          //                     border: OutlineInputBorder(
+          //                       borderRadius: BorderRadius.circular(
+          //                         Sizes.size12,
+          //                       ),
+          //                       borderSide: BorderSide.none,
+          //                     ),
+          //                     filled: true,
+          //                     fillColor: Colors.grey.shade200,
+          //                     contentPadding: const EdgeInsets.symmetric(
+          //                       horizontal: Sizes.size10,
+          //                     ),
+          //                     suffixIcon: Padding(
+          //                       padding: const EdgeInsets.only(
+          //                         right: Sizes.size10,
+          //                       ),
+          //                       child: Row(
+          //                         mainAxisSize: MainAxisSize.min,
+          //                         children: [
+          //                           FaIcon(
+          //                             FontAwesomeIcons.at,
+          //                             color: Colors.grey.shade900,
+          //                           ),
+          //                           Gaps.h14,
+          //                           FaIcon(
+          //                             FontAwesomeIcons.gift,
+          //                             color: Colors.grey.shade900,
+          //                           ),
+          //                           Gaps.h14,
+          //                           FaIcon(
+          //                             FontAwesomeIcons.faceSmile,
+          //                             color: Colors.grey.shade900,
+          //                           ),
+          //                           Gaps.h14,
+          //                           if (_isWriting)
+          //                             GestureDetector(
+          //                               onTap: _stopWriting,
+          //                               child: FaIcon(
+          //                                 FontAwesomeIcons.circleArrowUp,
+          //                                 color: Theme.of(context).primaryColor,
+          //                               ),
+          //                             ),
+          //                         ],
+          //                       ),
+          //                     ),
+          //                   ),
+          //                 ),
           bottom: TabBar(
             tabAlignment: TabAlignment.start,
             splashFactory: NoSplash.splashFactory,
@@ -73,6 +175,7 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
                   text: tab,
                 ),
             ],
+            onTap: _onTapChanged,
           ),
         ),
         body: TabBarView(
