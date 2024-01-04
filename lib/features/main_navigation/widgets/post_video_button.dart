@@ -4,10 +4,12 @@ import 'package:tiktok_clone/constants/sizes.dart';
 
 class PostVideoButton extends StatefulWidget {
   final VoidCallback onTap;
+  final bool inverted;
 
   const PostVideoButton({
     super.key,
     required this.onTap,
+    required this.inverted,
   });
 
   @override
@@ -98,18 +100,18 @@ class _PostVideoButtonState extends State<PostVideoButton>
               padding: const EdgeInsets.symmetric(
                 horizontal: Sizes.size12,
               ),
-              decoration: const BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.all(
+              decoration: BoxDecoration(
+                color: !widget.inverted ? Colors.white : Colors.black,
+                borderRadius: const BorderRadius.all(
                   Radius.circular(
                     Sizes.size6,
                   ),
                 ),
               ),
-              child: const Center(
+              child: Center(
                 child: FaIcon(
                   FontAwesomeIcons.plus,
-                  color: Colors.black,
+                  color: !widget.inverted ? Colors.black : Colors.white,
                   size: Sizes.size20,
                 ),
               ),
