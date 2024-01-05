@@ -97,64 +97,6 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
               fillColor: Colors.grey.shade100,
             ),
           ),
-          // title: TextField(
-          //                   onTap: _onStartWriting,
-          //                   expands: true,
-          //                   minLines: null,
-          //                   maxLines: null,
-          //                   textInputAction: TextInputAction.newline,
-          //                   cursorColor: Theme.of(context).primaryColor,
-          //                   decoration: InputDecoration(
-          //                     hintText: "Add comment...",
-          //                     hintStyle: TextStyle(
-          //                       color: Colors.grey.shade500,
-          //                     ),
-          //                     border: OutlineInputBorder(
-          //                       borderRadius: BorderRadius.circular(
-          //                         Sizes.size12,
-          //                       ),
-          //                       borderSide: BorderSide.none,
-          //                     ),
-          //                     filled: true,
-          //                     fillColor: Colors.grey.shade200,
-          //                     contentPadding: const EdgeInsets.symmetric(
-          //                       horizontal: Sizes.size10,
-          //                     ),
-          //                     suffixIcon: Padding(
-          //                       padding: const EdgeInsets.only(
-          //                         right: Sizes.size10,
-          //                       ),
-          //                       child: Row(
-          //                         mainAxisSize: MainAxisSize.min,
-          //                         children: [
-          //                           FaIcon(
-          //                             FontAwesomeIcons.at,
-          //                             color: Colors.grey.shade900,
-          //                           ),
-          //                           Gaps.h14,
-          //                           FaIcon(
-          //                             FontAwesomeIcons.gift,
-          //                             color: Colors.grey.shade900,
-          //                           ),
-          //                           Gaps.h14,
-          //                           FaIcon(
-          //                             FontAwesomeIcons.faceSmile,
-          //                             color: Colors.grey.shade900,
-          //                           ),
-          //                           Gaps.h14,
-          //                           if (_isWriting)
-          //                             GestureDetector(
-          //                               onTap: _stopWriting,
-          //                               child: FaIcon(
-          //                                 FontAwesomeIcons.circleArrowUp,
-          //                                 color: Theme.of(context).primaryColor,
-          //                               ),
-          //                             ),
-          //                         ],
-          //                       ),
-          //                     ),
-          //                   ),
-          //                 ),
           bottom: TabBar(
             tabAlignment: TabAlignment.start,
             splashFactory: NoSplash.splashFactory,
@@ -207,7 +149,7 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
                         fit: BoxFit.cover,
                         placeholder: "assets/images/placeholder.jpg",
                         image:
-                            "https://images.unsplash.com/photo-1673844969019-c99b0c933e90?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1480&q=80",
+                            "https://buffer.com/cdn-cgi/image/w=1000,fit=contain,q=90,f=auto/library/content/images/size/w1200/2023/10/free-images.jpg",
                       ),
                     ),
                   ),
