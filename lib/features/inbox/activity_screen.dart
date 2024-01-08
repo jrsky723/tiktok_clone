@@ -91,6 +91,7 @@ class _ActivityScreenState extends State<ActivityScreen>
           onTap: _toggleAnimations,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
             children: [
               const Text("All activity"),
               Gaps.h2,
