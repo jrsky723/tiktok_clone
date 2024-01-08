@@ -24,6 +24,7 @@ class TikTokApp extends StatelessWidget {
             0xFFE9435A,
           ),
         ),
+        splashColor: Colors.transparent,
         appBarTheme: AppBarTheme(
           surfaceTintColor: Colors.white,
           foregroundColor: Colors.black,
