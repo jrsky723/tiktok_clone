@@ -232,7 +232,6 @@ class _UserProfileScreenState extends State {
               ),
             ],
           ),
-          physics: const BouncingScrollPhysics(),
         ),
       ),
     );
