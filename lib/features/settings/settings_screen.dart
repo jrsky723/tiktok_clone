@@ -10,13 +10,9 @@ class SettingsScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text("Settings"),
       ),
-      body: const Column(
-        children: [
-          CupertinoActivityIndicator(
-            radius: 40,
-          ),
-          CircularProgressIndicator(),
-          CircularProgressIndicator.adaptive(),
+      body: ListView(
+        children: const [
+          AboutListTile(),
         ],
       ),
     );
