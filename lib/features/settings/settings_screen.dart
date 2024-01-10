@@ -126,6 +126,31 @@ class _SettingsScreenState extends State<SettingsScreen> {
               );
             },
           ),
+          ListTile(
+            title: const Text("Log out (iOS/bottom)"),
+            textColor: Colors.red,
+            onTap: () {
+              showCupertinoModalPopup(
+                context: context,
+                builder: (context) => CupertinoActionSheet(
+                  title: const Text("Log out"),
+                  message: const Text("Are you sure?"),
+                  actions: [
+                    CupertinoDialogAction(
+                      onPressed: () => Navigator.of(context).pop(),
+                      child: const Text("No"),
+                    ),
+                    CupertinoDialogAction(
+                      isDefaultAction: true,
+                      isDestructiveAction: true,
+                      onPressed: () => Navigator.of(context).pop(),
+                      child: const Text("Yes"),
+                    ),
+                  ],
+                ),
+              );
+            },
+          ),
           const AboutListTile(
             applicationVersion: "1.0",
             applicationLegalese: "Don't copy me.",
