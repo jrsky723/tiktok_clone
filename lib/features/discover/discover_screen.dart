@@ -62,45 +62,56 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
             constraints: const BoxConstraints(
               maxWidth: Breakpoints.sm,
             ),
-            child: TextField(
-              controller: _textEditingController,
-              onChanged: _onSearchChanged,
-              onSubmitted: _onSearchSubmitted,
-              decoration: InputDecoration(
-                hintText: "Search",
-                prefixIcon: const Padding(
-                  padding: EdgeInsets.only(
-                    left: Sizes.size10,
-                    top: Sizes.size14,
-                  ),
-                  child: FaIcon(
-                    FontAwesomeIcons.magnifyingGlass,
-                    color: Colors.grey,
-                    size: Sizes.size20,
-                  ),
-                ),
-                suffixIcon: Padding(
-                  padding: const EdgeInsets.only(
-                    right: Sizes.size10,
-                    top: Sizes.size14,
-                  ),
-                  child: GestureDetector(
-                    onTap: _onClearTapped,
-                    child: const FaIcon(
-                      FontAwesomeIcons.solidCircleXmark,
-                      color: Colors.black45,
-                      size: Sizes.size20,
+            child: SizedBox(
+              height: Sizes.size40,
+              child: Expanded(
+                child: TextField(
+                  maxLines: null,
+                  minLines: null,
+                  textAlignVertical: TextAlignVertical.center,
+                  controller: _textEditingController,
+                  onChanged: _onSearchChanged,
+                  onSubmitted: _onSearchSubmitted,
+                  decoration: InputDecoration(
+                    contentPadding: const EdgeInsets.symmetric(
+                      vertical: Sizes.size10,
                     ),
+                    hintText: "Search",
+                    prefixIcon: const Padding(
+                      padding: EdgeInsets.only(
+                        left: Sizes.size10,
+                        top: Sizes.size10,
+                      ),
+                      child: FaIcon(
+                        FontAwesomeIcons.magnifyingGlass,
+                        color: Colors.grey,
+                        size: Sizes.size20,
+                      ),
+                    ),
+                    suffixIcon: Padding(
+                      padding: const EdgeInsets.only(
+                        right: Sizes.size10,
+                        top: Sizes.size10,
+                      ),
+                      child: GestureDetector(
+                        onTap: _onClearTapped,
+                        child: const FaIcon(
+                          FontAwesomeIcons.solidCircleXmark,
+                          color: Colors.black45,
+                          size: Sizes.size20,
+                        ),
+                      ),
+                    ),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(
+                        Sizes.size12,
+                      ),
+                      borderSide: BorderSide.none,
+                    ),
+                    filled: true,
+                    fillColor: Colors.grey.shade100,
                   ),
                 ),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(
-                    Sizes.size12,
-                  ),
-                  borderSide: BorderSide.none,
-                ),
-                filled: true,
-                fillColor: Colors.grey.shade100,
               ),
             ),
           ),

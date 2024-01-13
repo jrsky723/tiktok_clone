@@ -140,7 +140,6 @@ class _VideoCommentsState extends State<VideoComments> {
                           height: Sizes.size44,
                           child: TextField(
                             onTap: _onStartWriting,
-                            expands: true,
                             minLines: null,
                             maxLines: null,
                             textInputAction: TextInputAction.newline,
