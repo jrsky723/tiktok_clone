@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:marquee/marquee.dart';
@@ -43,6 +44,7 @@ class _VideoPostState extends State<VideoPost>
 
   bool _isPaused = false;
   bool _isMoreTagsShowed = false;
+  bool _isMuted = false;
 
   final Iterable<String> _tags = keywords.map((tag) => "#$tag");
   late final String _tagString;
@@ -61,6 +63,10 @@ class _VideoPostState extends State<VideoPost>
         VideoPlayerController.asset("assets/videos/video.mp4");
     await _videoPlayerController.initialize();
     await _videoPlayerController.setLooping(true);
+    if (kIsWeb) {
+      await _videoPlayerController.setVolume(0);
+      _isMuted = true;
+    }
     _videoPlayerController.addListener(_onVideoChange);
     setState(() {});
   }
@@ -119,6 +125,17 @@ class _VideoPostState extends State<VideoPost>
 
     setState(() {
       _isPaused = !_isPaused;
+    });
+  }
+
+  void _onVolumeTap() {
+    if (_isMuted) {
+      _videoPlayerController.setVolume(1);
+    } else {
+      _videoPlayerController.setVolume(0);
+    }
+    setState(() {
+      _isMuted = !_isMuted;
     });
   }
 
@@ -285,6 +302,16 @@ class _VideoPostState extends State<VideoPost>
             right: 10,
             child: Column(
               children: [
+                GestureDetector(
+                  onTap: _onVolumeTap,
+                  child: VideoButton(
+                    icon: _isMuted
+                        ? FontAwesomeIcons.volumeXmark
+                        : FontAwesomeIcons.volumeHigh,
+                    text: _isMuted ? "OFF" : "ON",
+                  ),
+                ),
+                Gaps.v24,
                 const CircleAvatar(
                   radius: 25,
                   backgroundColor: Colors.black,
