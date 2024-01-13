@@ -58,45 +58,50 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
           elevation: 1,
-          title: TextField(
-            controller: _textEditingController,
-            onChanged: _onSearchChanged,
-            onSubmitted: _onSearchSubmitted,
-            decoration: InputDecoration(
-              hintText: "Search",
-              prefixIcon: const Padding(
-                padding: EdgeInsets.only(
-                  left: Sizes.size10,
-                  top: Sizes.size14,
-                ),
-                child: FaIcon(
-                  FontAwesomeIcons.magnifyingGlass,
-                  color: Colors.grey,
-                  size: Sizes.size20,
-                ),
-              ),
-              suffixIcon: Padding(
-                padding: const EdgeInsets.only(
-                  right: Sizes.size10,
-                  top: Sizes.size14,
-                ),
-                child: GestureDetector(
-                  onTap: _onClearTapped,
-                  child: const FaIcon(
-                    FontAwesomeIcons.solidCircleXmark,
-                    color: Colors.black45,
+          title: ConstrainedBox(
+            constraints: const BoxConstraints(
+              maxWidth: Breakpoints.sm,
+            ),
+            child: TextField(
+              controller: _textEditingController,
+              onChanged: _onSearchChanged,
+              onSubmitted: _onSearchSubmitted,
+              decoration: InputDecoration(
+                hintText: "Search",
+                prefixIcon: const Padding(
+                  padding: EdgeInsets.only(
+                    left: Sizes.size10,
+                    top: Sizes.size14,
+                  ),
+                  child: FaIcon(
+                    FontAwesomeIcons.magnifyingGlass,
+                    color: Colors.grey,
                     size: Sizes.size20,
                   ),
                 ),
-              ),
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(
-                  Sizes.size12,
+                suffixIcon: Padding(
+                  padding: const EdgeInsets.only(
+                    right: Sizes.size10,
+                    top: Sizes.size14,
+                  ),
+                  child: GestureDetector(
+                    onTap: _onClearTapped,
+                    child: const FaIcon(
+                      FontAwesomeIcons.solidCircleXmark,
+                      color: Colors.black45,
+                      size: Sizes.size20,
+                    ),
+                  ),
                 ),
-                borderSide: BorderSide.none,
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(
+                    Sizes.size12,
+                  ),
+                  borderSide: BorderSide.none,
+                ),
+                filled: true,
+                fillColor: Colors.grey.shade100,
               ),
-              filled: true,
-              fillColor: Colors.grey.shade100,
             ),
           ),
           bottom: TabBar(
