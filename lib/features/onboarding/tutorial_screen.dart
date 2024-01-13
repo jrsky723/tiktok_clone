@@ -117,20 +117,45 @@ class _TutorialScreenState extends State<TutorialScreen> {
             ),
           ),
         ),
-        bottomNavigationBar: Container(
-          padding: const EdgeInsets.symmetric(
-            vertical: Sizes.size48,
-            horizontal: Sizes.size24,
-          ),
-          child: AnimatedOpacity(
-            opacity: _showingPage == Page.first ? 0 : 1,
-            duration: const Duration(milliseconds: 300),
-            child: FormButton(
-              disabled: _showingPage == Page.first,
-              text: "Enter the app!",
-              onTap: _onEnterAppTap,
+        bottomNavigationBar: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            // page indicator
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: List.generate(
+                Page.values.length,
+                (index) {
+                  return Container(
+                    margin: const EdgeInsets.all(4),
+                    width: 8,
+                    height: 8,
+                    decoration: BoxDecoration(
+                      color: _showingPage == Page.values[index]
+                          ? Theme.of(context).primaryColor
+                          : Colors.grey,
+                      shape: BoxShape.circle,
+                    ),
+                  );
+                },
+              ),
             ),
-          ),
+            Container(
+              padding: const EdgeInsets.symmetric(
+                vertical: Sizes.size48,
+                horizontal: Sizes.size24,
+              ),
+              child: AnimatedOpacity(
+                opacity: _showingPage == Page.first ? 0 : 1,
+                duration: const Duration(milliseconds: 300),
+                child: FormButton(
+                  disabled: _showingPage == Page.first,
+                  text: "Enter the app!",
+                  onTap: _onEnterAppTap,
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );
