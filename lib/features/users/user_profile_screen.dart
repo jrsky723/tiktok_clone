@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:tiktok_clone/constants/breakpoints.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/features/settings/settings_screen.dart';
@@ -24,6 +25,7 @@ class _UserProfileScreenState extends State {
 
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
     return SafeArea(
       child: DefaultTabController(
         length: 2,
@@ -107,60 +109,66 @@ class _UserProfileScreenState extends State {
                       ),
                     ),
                     Gaps.v14,
-                    FractionallySizedBox(
-                      widthFactor: 0.5,
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: Container(
+                    ConstrainedBox(
+                      constraints: const BoxConstraints(
+                        maxWidth: Breakpoints.sm,
+                      ),
+                      child: FractionallySizedBox(
+                        widthFactor: 0.5,
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: Container(
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: Sizes.size12,
+                                ),
+                                decoration: BoxDecoration(
+                                  color: Theme.of(context).primaryColor,
+                                  borderRadius: BorderRadius.circular(
+                                    Sizes.size4,
+                                  ),
+                                ),
+                                child: const Text(
+                                  "Follow",
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
+                            ),
+                            Gaps.h4,
+                            Container(
                               padding: const EdgeInsets.symmetric(
+                                  horizontal: Sizes.size8,
+                                  vertical: Sizes.size9),
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                    color: Colors.grey.shade300, width: 1),
+                              ),
+                              child: const FaIcon(
+                                FontAwesomeIcons.youtube,
+                                size: Sizes.size20,
+                              ),
+                            ),
+                            Gaps.h4,
+                            Container(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: Sizes.size14 + Sizes.size1,
                                 vertical: Sizes.size12,
                               ),
                               decoration: BoxDecoration(
-                                color: Theme.of(context).primaryColor,
-                                borderRadius: BorderRadius.circular(
-                                  Sizes.size4,
-                                ),
+                                border: Border.all(
+                                    color: Colors.grey.shade300, width: 1),
                               ),
-                              child: const Text(
-                                "Follower",
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                                textAlign: TextAlign.center,
+                              child: const FaIcon(
+                                FontAwesomeIcons.caretDown,
+                                size: Sizes.size14,
                               ),
                             ),
-                          ),
-                          Gaps.h4,
-                          Container(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: Sizes.size8, vertical: Sizes.size9),
-                            decoration: BoxDecoration(
-                              border: Border.all(
-                                  color: Colors.grey.shade300, width: 1),
-                            ),
-                            child: const FaIcon(
-                              FontAwesomeIcons.youtube,
-                              size: Sizes.size20,
-                            ),
-                          ),
-                          Gaps.h4,
-                          Container(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: Sizes.size14 + Sizes.size1,
-                              vertical: Sizes.size12,
-                            ),
-                            decoration: BoxDecoration(
-                              border: Border.all(
-                                  color: Colors.grey.shade300, width: 1),
-                            ),
-                            child: const FaIcon(
-                              FontAwesomeIcons.caretDown,
-                              size: Sizes.size14,
-                            ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                     Gaps.v14,
@@ -208,8 +216,8 @@ class _UserProfileScreenState extends State {
                     ScrollViewKeyboardDismissBehavior.onDrag,
                 itemCount: 20,
                 padding: EdgeInsets.zero,
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 3,
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: width > Breakpoints.lg ? 5 : 3,
                   crossAxisSpacing: Sizes.size2,
                   mainAxisSpacing: Sizes.size2,
                   childAspectRatio: 9 / 14,

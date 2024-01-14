@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:tiktok_clone/constants/breakpoints.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/features/inbox/activity_screen.dart';
 import 'package:tiktok_clone/features/inbox/chats_screen.dart';
@@ -32,6 +33,7 @@ class _InboxScreenState extends State<InboxScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         elevation: 1,
         title: const Text("Inbox"),
         actions: [
@@ -43,61 +45,69 @@ class _InboxScreenState extends State<InboxScreen> {
           )
         ],
       ),
-      body: ListView(
-        children: [
-          ListTile(
-            onTap: _onActivityTap,
-            title: const Text(
-              "Activity",
-              style: TextStyle(
-                fontWeight: FontWeight.w600,
-                fontSize: Sizes.size16,
-              ),
-            ),
-            trailing: const FaIcon(
-              FontAwesomeIcons.chevronRight,
-              size: Sizes.size14,
-              color: Colors.black,
-            ),
+      body: Align(
+        alignment: Alignment.center,
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(
+            maxWidth: Breakpoints.sm,
           ),
-          Container(
-            color: Colors.grey.shade200,
-            height: Sizes.size1,
-          ),
-          ListTile(
-            leading: Container(
-              width: Sizes.size48,
-              decoration: const BoxDecoration(
-                shape: BoxShape.circle,
-                color: Colors.blue,
-              ),
-              child: const Center(
-                child: FaIcon(
-                  FontAwesomeIcons.users,
-                  color: Colors.white,
+          child: ListView(
+            children: [
+              ListTile(
+                onTap: _onActivityTap,
+                title: const Text(
+                  "Activity",
+                  style: TextStyle(
+                    fontWeight: FontWeight.w600,
+                    fontSize: Sizes.size16,
+                  ),
+                ),
+                trailing: const FaIcon(
+                  FontAwesomeIcons.chevronRight,
+                  size: Sizes.size14,
+                  color: Colors.black,
                 ),
               ),
-            ),
-            title: const Text(
-              "New followers",
-              style: TextStyle(
-                fontWeight: FontWeight.w600,
-                fontSize: Sizes.size16,
+              Container(
+                color: Colors.grey.shade200,
+                height: Sizes.size1,
               ),
-            ),
-            subtitle: const Text(
-              "Messages from people you follow will appear here",
-              style: TextStyle(
-                fontSize: Sizes.size14,
+              ListTile(
+                leading: Container(
+                  width: Sizes.size48,
+                  decoration: const BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Colors.blue,
+                  ),
+                  child: const Center(
+                    child: FaIcon(
+                      FontAwesomeIcons.users,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+                title: const Text(
+                  "New followers",
+                  style: TextStyle(
+                    fontWeight: FontWeight.w600,
+                    fontSize: Sizes.size16,
+                  ),
+                ),
+                subtitle: const Text(
+                  "Messages from people you follow will appear here",
+                  style: TextStyle(
+                    fontSize: Sizes.size14,
+                  ),
+                ),
+                trailing: const FaIcon(
+                  FontAwesomeIcons.chevronRight,
+                  size: Sizes.size14,
+                  color: Colors.black,
+                ),
               ),
-            ),
-            trailing: const FaIcon(
-              FontAwesomeIcons.chevronRight,
-              size: Sizes.size14,
-              color: Colors.black,
-            ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }
