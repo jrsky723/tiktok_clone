@@ -25,57 +25,52 @@ class _SettingsScreenState extends State<SettingsScreen> {
     final width = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Settings"),
+        title: const Text('Settings'),
       ),
       body: Center(
         child: ConstrainedBox(
           constraints: BoxConstraints(
-            maxWidth: width > Breakpoints.md ? Breakpoints.md : Breakpoints.sm,
+            maxWidth: width > Breakpoints.md ? Breakpoints.md : width,
           ),
           child: ListView(
             children: [
-              CupertinoSwitch(
-                value: _notifications,
-                onChanged: _onNotificationsChanged,
-              ),
               SwitchListTile.adaptive(
                 value: _notifications,
                 onChanged: _onNotificationsChanged,
-                title: const Text("Notifications"),
+                title: const Text("Enable notifications"),
+                subtitle: const Text("They will be cute."),
               ),
-              Checkbox(
+              CheckboxListTile(
+                activeColor: Colors.black,
                 value: _notifications,
                 onChanged: _onNotificationsChanged,
+                title: const Text("Marketing emails"),
+                subtitle: const Text("We won't spam you."),
               ),
               ListTile(
                 onTap: () async {
                   final date = await showDatePicker(
                     context: context,
                     initialDate: DateTime.now(),
-                    firstDate: DateTime(1990),
+                    firstDate: DateTime(1980),
                     lastDate: DateTime(2030),
                   );
+                  print(date);
                   final time = await showTimePicker(
                     context: context,
                     initialTime: TimeOfDay.now(),
                   );
+                  print(time);
                   final booking = await showDateRangePicker(
                     context: context,
-                    firstDate: DateTime(1990),
+                    firstDate: DateTime(1980),
                     lastDate: DateTime(2030),
                     builder: (context, child) {
                       return Theme(
-                        data: Theme.of(context).copyWith(
-                          colorScheme: const ColorScheme.light(
-                            primary: Colors.amberAccent,
-                            onPrimary: Colors.redAccent,
-                            onSurface: Colors.blueAccent,
-                          ),
-                          appBarTheme: const AppBarTheme(
-                            foregroundColor: Colors.black,
-                            backgroundColor: Colors.black,
-                          ),
-                        ),
+                        data: ThemeData(
+                            appBarTheme: const AppBarTheme(
+                                foregroundColor: Colors.white,
+                                backgroundColor: Colors.black)),
                         child: child!,
                       );
                     },
@@ -92,8 +87,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   showCupertinoDialog(
                     context: context,
                     builder: (context) => CupertinoAlertDialog(
-                      title: const Text("Log out"),
-                      content: const Text("Are you sure?"),
+                      title: const Text("Are you sure?"),
+                      content: const Text("Plx dont go"),
                       actions: [
                         CupertinoDialogAction(
                           onPressed: () => Navigator.of(context).pop(),
@@ -101,6 +96,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         ),
                         CupertinoDialogAction(
                           onPressed: () => Navigator.of(context).pop(),
+                          isDestructiveAction: true,
                           child: const Text("Yes"),
                         ),
                       ],
@@ -115,14 +111,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   showDialog(
                     context: context,
                     builder: (context) => AlertDialog(
-                      title: const Text("Log out"),
-                      content: const Text("Are you sure?"),
+                      icon: const FaIcon(FontAwesomeIcons.skull),
+                      title: const Text("Are you sure?"),
+                      content: const Text("Plx dont go"),
                       actions: [
                         IconButton(
                           onPressed: () => Navigator.of(context).pop(),
-                          icon: const FaIcon(
-                            FontAwesomeIcons.car,
-                          ),
+                          icon: const FaIcon(FontAwesomeIcons.car),
                         ),
                         TextButton(
                           onPressed: () => Navigator.of(context).pop(),
@@ -134,25 +129,25 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 },
               ),
               ListTile(
-                title: const Text("Log out (iOS/bottom)"),
+                title: const Text("Log out (iOS / Bottom)"),
                 textColor: Colors.red,
                 onTap: () {
                   showCupertinoModalPopup(
                     context: context,
                     builder: (context) => CupertinoActionSheet(
-                      title: const Text("Log out"),
-                      message: const Text("Are you sure?"),
+                      title: const Text("Are you sure?"),
+                      message: const Text("Please dooooont gooooo"),
                       actions: [
-                        CupertinoDialogAction(
-                          onPressed: () => Navigator.of(context).pop(),
-                          child: const Text("No"),
-                        ),
-                        CupertinoDialogAction(
+                        CupertinoActionSheetAction(
                           isDefaultAction: true,
+                          onPressed: () => Navigator.of(context).pop(),
+                          child: const Text("Not log out"),
+                        ),
+                        CupertinoActionSheetAction(
                           isDestructiveAction: true,
                           onPressed: () => Navigator.of(context).pop(),
-                          child: const Text("Yes"),
-                        ),
+                          child: const Text("Yes plz."),
+                        )
                       ],
                     ),
                   );

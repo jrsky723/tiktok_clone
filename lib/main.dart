@@ -26,7 +26,9 @@ class TikTokApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'TikTok Clone',
+      themeMode: ThemeMode.system,
       theme: ThemeData(
+        brightness: Brightness.light,
         scaffoldBackgroundColor: Colors.white,
         primaryColor: const Color(
           0xFFE9435A,
@@ -50,11 +52,43 @@ class TikTokApp extends StatelessWidget {
             fontWeight: FontWeight.w600,
           ),
         ),
-        bottomAppBarTheme: const BottomAppBarTheme(
-          surfaceTintColor: Colors.white,
+        bottomAppBarTheme: BottomAppBarTheme(
+          color: Colors.grey.shade50,
+        ),
+        bottomNavigationBarTheme: BottomNavigationBarThemeData(
+          backgroundColor: Colors.grey.shade50,
+        ),
+      ),
+      darkTheme: ThemeData(
+        brightness: Brightness.dark,
+        scaffoldBackgroundColor: Colors.grey.shade900,
+        primaryColor: const Color(
+          0xFFE9435A,
+        ),
+        textSelectionTheme: const TextSelectionThemeData(
+          cursorColor: Color(
+            0xFFE9435A,
+          ),
+        ),
+        splashColor: Colors.transparent,
+        appBarTheme: AppBarTheme(
+          surfaceTintColor: Colors.black,
+          foregroundColor: Colors.white,
+          backgroundColor: Colors.black,
+          shadowColor: Colors.grey.shade900,
+          centerTitle: true,
+          elevation: 0,
+          titleTextStyle: const TextStyle(
+            color: Colors.white,
+            fontSize: Sizes.size16 + Sizes.size2,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+        bottomAppBarTheme: BottomAppBarTheme(
+          color: Colors.grey.shade800,
         ),
         bottomNavigationBarTheme: const BottomNavigationBarThemeData(
-          backgroundColor: Colors.white,
+          backgroundColor: Colors.black,
         ),
       ),
       home: const SignUpScreen(),
