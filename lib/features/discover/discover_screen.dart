@@ -183,9 +183,10 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
                       style: TextStyle(
                         fontSize: Sizes.size18,
                         fontWeight: FontWeight.bold,
+                        height: 1.1,
                       ),
                     ),
-                    Gaps.v5,
+                    Gaps.v10,
                     if (constraints.maxWidth < 200 ||
                         constraints.maxWidth > 250)
                       DefaultTextStyle(
