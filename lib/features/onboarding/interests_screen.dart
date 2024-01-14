@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/features/authentication/widgets/form_button.dart';
-import 'package:tiktok_clone/features/authentication/widgets/interest_button.dart';
+import 'package:tiktok_clone/features/onboarding/widgets/interest_button.dart';
 import 'package:tiktok_clone/features/onboarding/tutorial_screen.dart';
 
 const interests = [
@@ -143,21 +143,11 @@ class _InterestsScreenState extends State<InterestsScreen> {
           ),
         ),
       ),
-      bottomNavigationBar: PhysicalModel(
-        color: Colors.white,
-        elevation: 20,
-        child: Container(
-          padding: const EdgeInsets.only(
-            bottom: Sizes.size40,
-            top: Sizes.size16,
-            left: Sizes.size24,
-            right: Sizes.size24,
-          ),
-          child: FormButton(
-            disabled: false,
-            text: "Next",
-            onTap: _onNextTap,
-          ),
+      bottomNavigationBar: BottomAppBar(
+        child: FormButton(
+          disabled: false,
+          text: "Next",
+          onTap: _onNextTap,
         ),
       ),
     );

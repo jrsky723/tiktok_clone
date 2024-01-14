@@ -3,6 +3,7 @@ import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/features/authentication/widgets/form_button.dart';
 import 'package:tiktok_clone/features/main_navigation/main_navigation_screen.dart';
+import 'package:tiktok_clone/utils.dart';
 
 enum Direction {
   left,
@@ -140,11 +141,9 @@ class _TutorialScreenState extends State<TutorialScreen> {
                 },
               ),
             ),
-            Container(
-              padding: const EdgeInsets.symmetric(
-                vertical: Sizes.size48,
-                horizontal: Sizes.size24,
-              ),
+            Gaps.v20,
+            BottomAppBar(
+              color: isDarkMode(context) ? Colors.grey.shade900 : Colors.white,
               child: AnimatedOpacity(
                 opacity: _showingPage == Page.first ? 0 : 1,
                 duration: const Duration(milliseconds: 300),
