@@ -8,13 +8,15 @@ import 'package:tiktok_clone/features/users/widgets/persistent_tab_bar.dart';
 import 'package:tiktok_clone/features/users/widgets/social_stats.dart';
 
 class UserProfileScreen extends StatefulWidget {
-  const UserProfileScreen({super.key});
+  final String username;
+
+  const UserProfileScreen({super.key, required this.username});
 
   @override
   State createState() => _UserProfileScreenState();
 }
 
-class _UserProfileScreenState extends State {
+class _UserProfileScreenState extends State<UserProfileScreen> {
   void _onGearPressed() {
     Navigator.of(context).push(
       MaterialPageRoute(
@@ -35,7 +37,7 @@ class _UserProfileScreenState extends State {
               return [
                 SliverAppBar(
                   backgroundColor: Colors.transparent,
-                  title: const Text("니꼬"),
+                  title: Text(widget.username),
                   actions: [
                     IconButton(
                       onPressed: _onGearPressed,
@@ -61,9 +63,9 @@ class _UserProfileScreenState extends State {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          const Text(
-                            "@니꼬",
-                            style: TextStyle(
+                          Text(
+                            "@${widget.username}",
+                            style: const TextStyle(
                               fontSize: Sizes.size18,
                               fontWeight: FontWeight.w600,
                             ),
