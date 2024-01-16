@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:go_router/go_router.dart';
+import 'package:tiktok_clone/constants/breakpoints.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/features/authentication/login_screen.dart';
@@ -12,9 +14,7 @@ class SignUpScreen extends StatelessWidget {
   const SignUpScreen({super.key});
 
   void _onLoginTap(BuildContext context) async {
-    final result = Navigator.of(context).pushNamed(LoginScreen.routeName);
-    // need to fix
-    print(result);
+    context.go(LoginScreen.routeName);
   }
 
   void _onEmailTap(BuildContext context) {
@@ -43,11 +43,12 @@ class SignUpScreen extends StatelessWidget {
     //     },
     //   ),
     // );
-    Navigator.of(context).pushNamed(UsernameScreen.routeName);
+    context.go(UsernameScreen.routeName);
   }
 
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
     return OrientationBuilder(
       builder: (context, orientation) {
         // if (orientation == Orientation.landscape) {
@@ -85,7 +86,8 @@ class SignUpScreen extends StatelessWidget {
                     ),
                   ),
                   Gaps.v40,
-                  if (orientation == Orientation.portrait) ...[
+                  if (orientation == Orientation.portrait ||
+                      width < Breakpoints.sm) ...[
                     AuthButton(
                       icon: const FaIcon(FontAwesomeIcons.user),
                       text: S.of(context).emailPasswordButton,
@@ -98,7 +100,8 @@ class SignUpScreen extends StatelessWidget {
                       onTap: () {},
                     )
                   ],
-                  if (orientation == Orientation.landscape)
+                  if (orientation == Orientation.landscape &&
+                      width >= Breakpoints.sm)
                     Row(
                       children: [
                         Expanded(
