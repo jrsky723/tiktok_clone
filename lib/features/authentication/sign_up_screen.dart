@@ -13,6 +13,7 @@ class SignUpScreen extends StatelessWidget {
 
   void _onLoginTap(BuildContext context) async {
     final result = Navigator.of(context).pushNamed(LoginScreen.routeName);
+    // need to fix
     print(result);
   }
 
