@@ -29,6 +29,24 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen> {
     await _cameraController.initialize();
   }
 
+  void _showDeniedDialog() {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text("Permission denied"),
+        content: const Text(
+          "Please allow camera and microphone permissions to record videos.",
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: const Text("OK"),
+          ),
+        ],
+      ),
+    );
+  }
+
   Future<void> initPermissions() async {
     final cameraPermission = await Permission.camera.request();
     final micPermission = await Permission.microphone.request();
@@ -42,6 +60,8 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen> {
       _hasPermission = true;
       await initCamera();
       setState(() {});
+    } else {
+      _showDeniedDialog();
     }
   }
 
