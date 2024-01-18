@@ -19,6 +19,13 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen>
     with TickerProviderStateMixin, WidgetsBindingObserver {
   bool _hasPermission = false;
   bool _isSelfieMode = false;
+  late FlashMode _flashMode;
+  late CameraController _cameraController;
+
+  late double _maxZoomLevel, _minZoomLevel;
+  double _currentZoomLevel = 0.0;
+  final double _zoomStep = 0.05;
+  double _lastZoomVerticalPosition = 0.0;
 
   late final AnimationController _buttonAnimationController =
       AnimationController(
@@ -39,9 +46,6 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen>
     upperBound: 1.0,
   );
 
-  late FlashMode _flashMode;
-  late CameraController _cameraController;
-
   Future<void> _initCamera() async {
     final cameras = await availableCameras();
 
@@ -54,8 +58,10 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen>
     );
 
     await _cameraController.initialize();
+    _maxZoomLevel = await _cameraController.getMaxZoomLevel();
+    _minZoomLevel = await _cameraController.getMinZoomLevel();
+    _currentZoomLevel = _minZoomLevel;
     await _cameraController.prepareForVideoRecording();
-
     _flashMode = _cameraController.value.flashMode;
 
     setState(() {});
@@ -79,7 +85,7 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen>
     );
   }
 
-  Future<void> initPermissions() async {
+  Future<void> _initPermissions() async {
     final cameraPermission = await Permission.camera.request();
     final micPermission = await Permission.microphone.request();
 
@@ -112,7 +118,7 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen>
   @override
   void initState() {
     super.initState();
-    initPermissions();
+    _initPermissions();
     WidgetsBinding.instance.addObserver(this);
     _progressAnimationController.addListener(() {
       setState(() {});
@@ -170,6 +176,27 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen>
         ),
       ),
     );
+  }
+
+  Future<void> _onZoomLevelChanged(LongPressMoveUpdateDetails details) async {
+    if (_lastZoomVerticalPosition == 0.0) {
+      _lastZoomVerticalPosition = details.globalPosition.dy;
+      return;
+    }
+
+    final double currentVerticalPosition = details.globalPosition.dy;
+    final delta = currentVerticalPosition - _lastZoomVerticalPosition;
+
+    final double newZoomLevel = _currentZoomLevel - delta * _zoomStep;
+
+    if (newZoomLevel < _minZoomLevel || newZoomLevel > _maxZoomLevel) return;
+
+    await _cameraController.setZoomLevel(newZoomLevel);
+
+    _lastZoomVerticalPosition = currentVerticalPosition;
+    _currentZoomLevel = newZoomLevel;
+
+    setState(() {});
   }
 
   @override
@@ -272,6 +299,7 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen>
                             onLongPressStart: (detail) => _startRecording(),
                             onTapUp: (detail) => _stopRecording(),
                             onLongPressEnd: (detail) => _stopRecording(),
+                            onLongPressMoveUpdate: _onZoomLevelChanged,
                             child: ScaleTransition(
                               scale: _buttonAnimation,
                               child: Stack(
