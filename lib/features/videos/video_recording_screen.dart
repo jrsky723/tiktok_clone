@@ -119,7 +119,7 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen>
     });
   }
 
-  Future<void> _startRecording(TapDownDetails details) async {
+  Future<void> _startRecording() async {
     if (_cameraController.value.isRecordingVideo) return;
     await _cameraController.startVideoRecording();
 
@@ -224,7 +224,7 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen>
                     Positioned(
                       bottom: Sizes.size40,
                       child: GestureDetector(
-                        onTapDown: _startRecording,
+                        onLongPressStart: (detail) => _startRecording(),
                         onTapUp: (detail) => _stopRecording(),
                         onLongPressEnd: (detail) => _stopRecording(),
                         child: ScaleTransition(
