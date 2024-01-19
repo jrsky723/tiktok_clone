@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:camera/camera.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gallery_saver/gallery_saver.dart';
@@ -25,9 +26,15 @@ class _VideoPreviewScreenState extends State<VideoPreviewScreen> {
   bool _savedVideo = false;
 
   Future<void> _initVideo() async {
-    _videoPlayerController = VideoPlayerController.file(
-      File(widget.video.path),
-    );
+    if (kIsWeb) {
+      _videoPlayerController = VideoPlayerController.network(
+        widget.video.path,
+      );
+    } else {
+      _videoPlayerController = VideoPlayerController.file(
+        File(widget.video.path),
+      );
+    }
 
     await _videoPlayerController.initialize();
     await _videoPlayerController.setLooping(true);
