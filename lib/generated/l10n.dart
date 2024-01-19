@@ -168,6 +168,26 @@ class S {
       args: [valueString, value2],
     );
   }
+
+  /// `Manage your account, check notifications, comment on videos, and more.`
+  String get loginSubtitle {
+    return Intl.message(
+      'Manage your account, check notifications, comment on videos, and more.',
+      name: 'loginSubtitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Sign up`
+  String get signUp {
+    return Intl.message(
+      'Sign up',
+      name: 'signUp',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

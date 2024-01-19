@@ -57,5 +57,7 @@
         "format": "compact"
       }
     }
-  }
+  },
+  "loginSubtitle": "Manage your account, check notifications, comment on videos, and more.",
+  "signUp": "Sign up"
 }

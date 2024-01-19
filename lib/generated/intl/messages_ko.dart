@@ -26,6 +26,8 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m2(value) => "${value}";
 
+  static String m3(nameOfTheApp) => "${nameOfTheApp}에 로그인하세요";
+
   static String m4(videoCount) =>
       "Create a profile, follow other accounts, make your own videos, and more.";
 
@@ -43,6 +45,10 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Use email & password"),
         "likeCount": m2,
         "logIn": MessageLookupByLibrary.simpleMessage("Log in"),
+        "loginSubtitle": MessageLookupByLibrary.simpleMessage(
+            "Manage your account, check notifications, comment on videos, and more."),
+        "loginTitle": m3,
+        "signUp": MessageLookupByLibrary.simpleMessage("Sign up"),
         "signUpSubtitle": m4,
         "signUpTitle": m5
       };

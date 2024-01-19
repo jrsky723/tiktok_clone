@@ -46,7 +46,10 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Use email & password"),
         "likeCount": m2,
         "logIn": MessageLookupByLibrary.simpleMessage("Log in"),
+        "loginSubtitle": MessageLookupByLibrary.simpleMessage(
+            "Manage your account, check notifications, comment on videos, and more."),
         "loginTitle": m3,
+        "signUp": MessageLookupByLibrary.simpleMessage("Sign up"),
         "signUpSubtitle": m4,
         "signUpTitle": m5
       };
