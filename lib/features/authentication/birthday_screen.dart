@@ -33,7 +33,7 @@ class _BirthdayScreenState extends State<BirthdayScreen> {
   }
 
   void _onNextTap() {
-    context.pushReplacementNamed(
+    context.goNamed(
       InterestsScreen.routeName,
     );
   }
