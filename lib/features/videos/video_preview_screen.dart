@@ -86,7 +86,9 @@ class _VideoPreviewScreenState extends State<VideoPreviewScreen> {
         ],
       ),
       body: _videoPlayerController.value.isInitialized
-          ? VideoPlayer(_videoPlayerController)
+          ? Center(
+              child: VideoPlayer(_videoPlayerController),
+            )
           : const Center(
               child: CircularProgressIndicator(),
             ),
