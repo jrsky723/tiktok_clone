@@ -307,10 +307,10 @@ class _VideoPostState extends State<VideoPost>
                 GestureDetector(
                   onTap: _onVolumeTap,
                   child: VideoButton(
-                    icon: VideoConfig.of(context).autoMute
+                    icon: _isMuted
                         ? FontAwesomeIcons.volumeXmark
                         : FontAwesomeIcons.volumeHigh,
-                    text: VideoConfig.of(context).autoMute ? "OFF" : "ON",
+                    text: _isMuted ? "OFF" : "ON",
                   ),
                 ),
                 Gaps.v24,
