@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:marquee/marquee.dart';
+import 'package:tiktok_clone/common/widgets/video_configuration/video_config.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/features/videos/widgets/video_button.dart';
@@ -46,6 +47,7 @@ class _VideoPostState extends State<VideoPost>
   bool _isPaused = false;
   bool _isMoreTagsShowed = false;
   bool _isMuted = false;
+  bool _autoMute = videoConfig.autoMute;
 
   final Iterable<String> _tags = keywords.map((tag) => "#$tag");
   late final String _tagString;
@@ -92,9 +94,12 @@ class _VideoPostState extends State<VideoPost>
       value: 1.5,
       duration: _animationDuration,
     );
-    // _animationController.addListener(() {
-    //   setState(() {});
-    // });
+
+    videoConfig.addListener(() {
+      setState(() {
+        _autoMute = videoConfig.autoMute;
+      });
+    });
   }
 
   @override
@@ -304,12 +309,12 @@ class _VideoPostState extends State<VideoPost>
             child: Column(
               children: [
                 GestureDetector(
-                  onTap: _onVolumeTap,
+                  onTap: videoConfig.toggleAutoMute,
                   child: VideoButton(
-                    icon: _isMuted
+                    icon: _autoMute
                         ? FontAwesomeIcons.volumeXmark
                         : FontAwesomeIcons.volumeHigh,
-                    text: _isMuted ? "OFF" : "ON",
+                    text: _autoMute ? "OFF" : "ON",
                   ),
                 ),
                 Gaps.v24,
