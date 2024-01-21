@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:marquee/marquee.dart';
+import 'package:tiktok_clone/common/widgets/video_configuration/video_config.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/features/videos/widgets/video_button.dart';
@@ -306,10 +307,10 @@ class _VideoPostState extends State<VideoPost>
                 GestureDetector(
                   onTap: _onVolumeTap,
                   child: VideoButton(
-                    icon: _isMuted
+                    icon: VideoConfig.of(context).autoMute
                         ? FontAwesomeIcons.volumeXmark
                         : FontAwesomeIcons.volumeHigh,
-                    text: _isMuted ? "OFF" : "ON",
+                    text: VideoConfig.of(context).autoMute ? "OFF" : "ON",
                   ),
                 ),
                 Gaps.v24,
