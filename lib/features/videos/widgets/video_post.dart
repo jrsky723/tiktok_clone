@@ -47,7 +47,7 @@ class _VideoPostState extends State<VideoPost>
   bool _isPaused = false;
   bool _isMoreTagsShowed = false;
   bool _isMuted = false;
-  bool _autoMute = videoConfig.autoMute;
+  bool _autoMute = videoConfig.value;
 
   final Iterable<String> _tags = keywords.map((tag) => "#$tag");
   late final String _tagString;
@@ -97,7 +97,7 @@ class _VideoPostState extends State<VideoPost>
 
     videoConfig.addListener(() {
       setState(() {
-        _autoMute = videoConfig.autoMute;
+        _autoMute = videoConfig.value;
       });
     });
   }
@@ -309,12 +309,14 @@ class _VideoPostState extends State<VideoPost>
             child: Column(
               children: [
                 GestureDetector(
-                  onTap: videoConfig.toggleAutoMute,
+                  onTap: () {
+                    videoConfig.value = !videoConfig.value;
+                  },
                   child: VideoButton(
-                    icon: _autoMute
+                    icon: !videoConfig.value
                         ? FontAwesomeIcons.volumeXmark
                         : FontAwesomeIcons.volumeHigh,
-                    text: _autoMute ? "OFF" : "ON",
+                    text: !videoConfig.value ? "OFF" : "ON",
                   ),
                 ),
                 Gaps.v24,
