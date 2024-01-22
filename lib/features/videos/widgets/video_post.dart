@@ -47,7 +47,6 @@ class _VideoPostState extends State<VideoPost>
   bool _isPaused = false;
   bool _isMoreTagsShowed = false;
   bool _isMuted = false;
-  bool _autoMute = videoConfig.value;
 
   final Iterable<String> _tags = keywords.map((tag) => "#$tag");
   late final String _tagString;
@@ -94,12 +93,6 @@ class _VideoPostState extends State<VideoPost>
       value: 1.5,
       duration: _animationDuration,
     );
-
-    videoConfig.addListener(() {
-      setState(() {
-        _autoMute = videoConfig.value;
-      });
-    });
   }
 
   @override
