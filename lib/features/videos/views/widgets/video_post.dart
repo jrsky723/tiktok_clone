@@ -108,7 +108,7 @@ class _VideoPostState extends State<VideoPost>
 
   void _initMuted() {
     if (kIsWeb) return;
-    final isMuted = context.read<PlaybackConfigViewModel>().muted;
+    const isMuted = false;
     _setMuted(isMuted);
     setState(() {
       _isMuted = isMuted;
@@ -131,10 +131,10 @@ class _VideoPostState extends State<VideoPost>
     if (info.visibleFraction == 1 &&
         !_isPaused &&
         !_videoPlayerController.value.isPlaying) {
-      final autoplay = context.read<PlaybackConfigViewModel>().autoplay;
-      if (autoplay) {
-        _videoPlayerController.play();
-      }
+      // final autoplay = context.read<PlaybackConfigViewModel>().autoplay;
+      // if (autoplay) {
+      //   _videoPlayerController.play();
+      // }
     }
     if (_videoPlayerController.value.isPlaying && info.visibleFraction == 0) {
       _onTogglePause();
