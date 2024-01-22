@@ -1,8 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:marquee/marquee.dart';
-import 'package:provider/provider.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/features/videos/view_models/playback_config_vm.dart';
@@ -24,7 +24,7 @@ const keywords = [
   "tag9",
 ];
 
-class VideoPost extends StatefulWidget {
+class VideoPost extends ConsumerStatefulWidget {
   final int index;
   final Function onVideoFinished;
 
@@ -35,10 +35,10 @@ class VideoPost extends StatefulWidget {
   });
 
   @override
-  State<VideoPost> createState() => _VideoPostState();
+  VideoPostState createState() => VideoPostState();
 }
 
-class _VideoPostState extends State<VideoPost>
+class VideoPostState extends ConsumerState<VideoPost>
     with SingleTickerProviderStateMixin {
   late final VideoPlayerController _videoPlayerController;
 
@@ -108,7 +108,7 @@ class _VideoPostState extends State<VideoPost>
 
   void _initMuted() {
     if (kIsWeb) return;
-    const isMuted = false;
+    final isMuted = ref.read(playbackConfigProvider).muted;
     _setMuted(isMuted);
     setState(() {
       _isMuted = isMuted;
@@ -131,10 +131,10 @@ class _VideoPostState extends State<VideoPost>
     if (info.visibleFraction == 1 &&
         !_isPaused &&
         !_videoPlayerController.value.isPlaying) {
-      // final autoplay = context.read<PlaybackConfigViewModel>().autoplay;
-      // if (autoplay) {
-      //   _videoPlayerController.play();
-      // }
+      final autoplay = ref.read(playbackConfigProvider).autoplay;
+      if (autoplay) {
+        _videoPlayerController.play();
+      }
     }
     if (_videoPlayerController.value.isPlaying && info.visibleFraction == 0) {
       _onTogglePause();
