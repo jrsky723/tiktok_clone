@@ -19,6 +19,7 @@ class TimelineViewModel extends AsyncNotifier<List<VideoModel>> {
   @override
   FutureOr<List<VideoModel>> build() async {
     await Future.delayed(const Duration(seconds: 5));
+
     return _list;
   }
 }
