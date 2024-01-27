@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tiktok_clone/constants/breakpoints.dart';
@@ -6,10 +7,11 @@ import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/features/authentication/login_form_screen.dart';
 import 'package:tiktok_clone/features/authentication/sign_up_screen.dart';
+import 'package:tiktok_clone/features/authentication/view_models/social_auth_view_model.dart';
 import 'package:tiktok_clone/features/authentication/widgets/auth_button.dart';
 import 'package:tiktok_clone/generated/l10n.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends ConsumerWidget {
   static String routeName = "/login";
   static String routeURL = "/login";
   const LoginScreen({super.key});
@@ -28,7 +30,7 @@ class LoginScreen extends StatelessWidget {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final width = MediaQuery.of(context).size.width;
     return OrientationBuilder(
       builder: (context, orientation) {
@@ -61,21 +63,25 @@ class LoginScreen extends StatelessWidget {
                   ),
                   Gaps.v40,
                   if (orientation == Orientation.portrait ||
-                      width < Breakpoints.sm) ...[
-                    AuthButton(
-                      icon: const FaIcon(FontAwesomeIcons.user),
-                      text: S.of(context).emailPasswordButton,
-                      onTap: () => _onEmailLoginTap(context),
-                    ),
-                    Gaps.v16,
-                    AuthButton(
-                      text: S.of(context).appleButton,
-                      icon: const FaIcon(FontAwesomeIcons.apple),
-                      onTap: () {},
-                    ),
-                  ],
-                  if (orientation == Orientation.landscape &&
-                      width >= Breakpoints.sm)
+                      width < Breakpoints.sm)
+                    Column(
+                      children: [
+                        AuthButton(
+                          icon: const FaIcon(FontAwesomeIcons.user),
+                          text: S.of(context).emailPasswordButton,
+                          onTap: () => _onEmailLoginTap(context),
+                        ),
+                        Gaps.v16,
+                        AuthButton(
+                          text: "Continue with Github",
+                          icon: const FaIcon(FontAwesomeIcons.github),
+                          onTap: () => ref
+                              .read(socialAuthProvider.notifier)
+                              .githubSignIn(context),
+                        ),
+                      ],
+                    )
+                  else
                     Row(
                       children: [
                         Expanded(
@@ -88,9 +94,11 @@ class LoginScreen extends StatelessWidget {
                         Gaps.h16,
                         Expanded(
                           child: AuthButton(
-                            text: S.of(context).appleButton,
-                            icon: const FaIcon(FontAwesomeIcons.apple),
-                            onTap: () {},
+                            text: "Continue with Github",
+                            icon: const FaIcon(FontAwesomeIcons.github),
+                            onTap: () => ref
+                                .read(socialAuthProvider.notifier)
+                                .githubSignIn(context),
                           ),
                         ),
                       ],
