@@ -26,7 +26,6 @@ class _LoginFormScreenState extends ConsumerState<LoginFormScreen> {
               formData["password"]!,
               context,
             );
-        // ref.read(loginProvider.notifier).login(formData["email"], formData["password"], context);
         // log user in
         // context.goNamed(
         //   InterestsScreen.routeName,
