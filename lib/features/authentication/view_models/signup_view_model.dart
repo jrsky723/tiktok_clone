@@ -26,7 +26,12 @@ class SignUpViewModel extends AsyncNotifier<void> {
           form["email"],
           form["password"],
         );
-        await users.createProfile(userCredential);
+        await users.createProfile(
+          credential: userCredential,
+          email: form["email"],
+          name: form["name"],
+          birthday: form["birthday"],
+        );
       },
     );
     if (state.hasError) {
@@ -35,6 +40,18 @@ class SignUpViewModel extends AsyncNotifier<void> {
       context.goNamed(InterestsScreen.routeName);
     }
   }
+}
+
+void updateForm({
+  required WidgetRef ref,
+  required String key,
+  required String value,
+}) {
+  final state = ref.read(signUpForm.notifier).state;
+  ref.read(signUpForm.notifier).state = {
+    ...state,
+    key: value,
+  };
 }
 
 final signUpForm = StateProvider((ref) => {});

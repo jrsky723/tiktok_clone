@@ -34,8 +34,14 @@ class _BirthdayScreenState extends ConsumerState<BirthdayScreen> {
     super.dispose();
   }
 
-  void _onNextTap() {
-    ref.read(signUpProvider.notifier).signUp(context);
+  Future<void> _onNextTap() async {
+    if (_birthdayController.text.isEmpty) return;
+    updateForm(
+      ref: ref,
+      key: "birthday",
+      value: _birthdayController.text,
+    );
+    await ref.read(signUpProvider.notifier).signUp(context);
   }
 
   void _setTextFieldDate(DateTime date) {
