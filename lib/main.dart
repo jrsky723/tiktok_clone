@@ -25,7 +25,6 @@ void main() async {
   //     DeviceOrientation.portraitDown,
   //   ],
   // );
-  //
 
   final preferences = await SharedPreferences.getInstance();
   final repository = PlaybackConfigRepository(preferences);
