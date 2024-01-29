@@ -29,6 +29,7 @@ class AuthenticationRepository {
 
   Future<void> githubSignIn() async {
     await _firebaseAuth.signInWithProvider(GithubAuthProvider());
+    // android and ios
   }
 }
 
