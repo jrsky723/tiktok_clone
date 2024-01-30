@@ -75,6 +75,9 @@ class TikTokApp extends ConsumerWidget {
             cursorColor: Color(
               0xFFE9435A,
             ),
+            selectionHandleColor: Color(
+              0xFFE9435A,
+            ),
           ),
           splashColor: Colors.transparent,
           appBarTheme: AppBarTheme(
