@@ -7,6 +7,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gallery_saver/gallery_saver.dart';
 import 'package:tiktok_clone/features/videos/view_models/timeline_view_model.dart';
+import 'package:tiktok_clone/features/videos/view_models/upload_video_view_model.dart';
 import 'package:video_player/video_player.dart';
 
 class VideoPreviewScreen extends ConsumerStatefulWidget {
@@ -26,6 +27,8 @@ class VideoPreviewScreenState extends ConsumerState<VideoPreviewScreen> {
   late final VideoPlayerController _videoPlayerController;
 
   bool _savedVideo = false;
+  final TextEditingController _titleController = TextEditingController();
+  final TextEditingController _descriptionController = TextEditingController();
 
   Future<void> _initVideo() async {
     if (kIsWeb) {
@@ -57,8 +60,12 @@ class VideoPreviewScreenState extends ConsumerState<VideoPreviewScreen> {
     setState(() {});
   }
 
-  void _onUploadPressed() {
-    ref.read(timelineProvider.notifier).uploadVideo();
+  void _onUploadPressed() async {
+    ref.read(uploadVideoProvider.notifier).uploadVideo(
+          video: File(widget.video.path),
+          title: _titleController.text,
+          description: _descriptionController.text,
+        );
   }
 
   @override
@@ -75,7 +82,9 @@ class VideoPreviewScreenState extends ConsumerState<VideoPreviewScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final double keyboardHeight = MediaQuery.of(context).viewInsets.bottom;
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: Colors.black,
       appBar: AppBar(
         title: const Text("Preview video"),
@@ -101,13 +110,43 @@ class VideoPreviewScreenState extends ConsumerState<VideoPreviewScreen> {
           ),
         ],
       ),
-      body: _videoPlayerController.value.isInitialized
-          ? Center(
-              child: VideoPlayer(_videoPlayerController),
-            )
-          : const Center(
-              child: CircularProgressIndicator(),
+      body: Stack(
+        children: [
+          Positioned.fill(
+            child: _videoPlayerController.value.isInitialized
+                ? AspectRatio(
+                    aspectRatio: _videoPlayerController.value.aspectRatio,
+                    child: VideoPlayer(_videoPlayerController),
+                  )
+                : const Center(child: CircularProgressIndicator()),
+          ),
+          Positioned(
+            left: 0,
+            right: 0,
+            bottom: keyboardHeight,
+            child: Column(
+              children: [
+                TextFormField(
+                  decoration: InputDecoration(
+                    labelText: 'Title',
+                    filled: true,
+                    fillColor: Colors.white.withOpacity(0.7),
+                  ),
+                  controller: _titleController,
+                ),
+                TextFormField(
+                  decoration: InputDecoration(
+                    labelText: 'Description',
+                    filled: true,
+                    fillColor: Colors.white.withOpacity(0.7),
+                  ),
+                  controller: _descriptionController,
+                ),
+              ],
             ),
+          ),
+        ],
+      ),
     );
   }
 }

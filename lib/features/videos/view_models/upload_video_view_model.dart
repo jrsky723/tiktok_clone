@@ -12,7 +12,11 @@ class UploadVideoViewModel extends AsyncNotifier<void> {
     _repository = ref.read(videosRepo);
   }
 
-  Future<void> uploadVideo(File video) async {
+  Future<void> uploadVideo({
+    required File video,
+    required String title,
+    required String description,
+  }) async {
     final user = ref.read(authRepo).user;
     state = const AsyncValue.loading();
     state = await AsyncValue.guard(() async {
@@ -23,3 +27,7 @@ class UploadVideoViewModel extends AsyncNotifier<void> {
     });
   }
 }
+
+final uploadVideoProvider = AsyncNotifierProvider<UploadVideoViewModel, void>(
+  () => UploadVideoViewModel(),
+);
