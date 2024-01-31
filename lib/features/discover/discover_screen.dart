@@ -65,58 +65,54 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
             ),
             child: SizedBox(
               height: Sizes.size40,
-              child: Expanded(
-                child: TextField(
-                  style: TextStyle(
-                    color: isDarkMode(context) ? Colors.white : Colors.black,
+              child: TextField(
+                style: TextStyle(
+                  color: isDarkMode(context) ? Colors.white : Colors.black,
+                ),
+                textAlignVertical: TextAlignVertical.center,
+                controller: _textEditingController,
+                onChanged: _onSearchChanged,
+                onSubmitted: _onSearchSubmitted,
+                decoration: InputDecoration(
+                  contentPadding: const EdgeInsets.symmetric(
+                    vertical: Sizes.size10,
                   ),
-                  maxLines: null,
-                  minLines: null,
-                  textAlignVertical: TextAlignVertical.center,
-                  controller: _textEditingController,
-                  onChanged: _onSearchChanged,
-                  onSubmitted: _onSearchSubmitted,
-                  decoration: InputDecoration(
-                    contentPadding: const EdgeInsets.symmetric(
-                      vertical: Sizes.size10,
+                  hintText: "Search",
+                  prefixIcon: const Padding(
+                    padding: EdgeInsets.only(
+                      left: Sizes.size10,
+                      top: Sizes.size10,
                     ),
-                    hintText: "Search",
-                    prefixIcon: const Padding(
-                      padding: EdgeInsets.only(
-                        left: Sizes.size10,
-                        top: Sizes.size10,
-                      ),
-                      child: FaIcon(
-                        FontAwesomeIcons.magnifyingGlass,
+                    child: FaIcon(
+                      FontAwesomeIcons.magnifyingGlass,
+                      color: Colors.grey,
+                      size: Sizes.size20,
+                    ),
+                  ),
+                  suffixIcon: Padding(
+                    padding: const EdgeInsets.only(
+                      right: Sizes.size10,
+                      top: Sizes.size10,
+                    ),
+                    child: GestureDetector(
+                      onTap: _onClearTapped,
+                      child: const FaIcon(
+                        FontAwesomeIcons.solidCircleXmark,
                         color: Colors.grey,
                         size: Sizes.size20,
                       ),
                     ),
-                    suffixIcon: Padding(
-                      padding: const EdgeInsets.only(
-                        right: Sizes.size10,
-                        top: Sizes.size10,
-                      ),
-                      child: GestureDetector(
-                        onTap: _onClearTapped,
-                        child: const FaIcon(
-                          FontAwesomeIcons.solidCircleXmark,
-                          color: Colors.grey,
-                          size: Sizes.size20,
-                        ),
-                      ),
-                    ),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(
-                        Sizes.size12,
-                      ),
-                      borderSide: BorderSide.none,
-                    ),
-                    filled: true,
-                    fillColor: isDarkMode(context)
-                        ? Colors.grey.shade900
-                        : Colors.grey.shade200,
                   ),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(
+                      Sizes.size12,
+                    ),
+                    borderSide: BorderSide.none,
+                  ),
+                  filled: true,
+                  fillColor: isDarkMode(context)
+                      ? Colors.grey.shade900
+                      : Colors.grey.shade200,
                 ),
               ),
             ),
