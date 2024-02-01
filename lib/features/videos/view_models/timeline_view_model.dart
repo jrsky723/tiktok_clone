@@ -16,7 +16,8 @@ class TimelineViewModel extends AsyncNotifier<List<VideoModel>> {
     );
     final videos = result.docs.map(
       (doc) => VideoModel.fromJson(
-        doc.data(),
+        json: doc.data(),
+        videoId: doc.id,
       ),
     );
     return videos.toList();
@@ -34,6 +35,12 @@ class TimelineViewModel extends AsyncNotifier<List<VideoModel>> {
       lastItemCreatedAt: _list.last.createdAt,
     );
     _list = [..._list, ...nextPage];
+    state = AsyncValue.data(_list);
+  }
+
+  Future<void> refresh() async {
+    final videos = await _fetchVideos(lastItemCreatedAt: null);
+    _list = videos;
     state = AsyncValue.data(_list);
   }
 }

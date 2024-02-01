@@ -7,6 +7,7 @@ import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/features/videos/models/video_model.dart';
 import 'package:tiktok_clone/features/videos/view_models/playback_config_vm.dart';
+import 'package:tiktok_clone/features/videos/view_models/video_post_view_model.dart';
 import 'package:tiktok_clone/features/videos/views/widgets/video_button.dart';
 import 'package:tiktok_clone/features/videos/views/widgets/video_comments.dart';
 import 'package:tiktok_clone/generated/l10n.dart';
@@ -62,6 +63,10 @@ class VideoPostState extends ConsumerState<VideoPost>
         widget.onVideoFinished();
       }
     }
+  }
+
+  void _onLikeTap() {
+    ref.read(videoPostProvider(widget.videoData.id).notifier).likeVideo();
   }
 
   void _initVideoPlayer() async {
@@ -322,14 +327,12 @@ class VideoPostState extends ConsumerState<VideoPost>
             right: 10,
             child: Column(
               children: [
-                GestureDetector(
+                VideoButton(
                   onTap: _toggleMuted,
-                  child: VideoButton(
-                    icon: _isMuted
-                        ? FontAwesomeIcons.volumeXmark
-                        : FontAwesomeIcons.volumeHigh,
-                    text: _isMuted ? "OFF" : "ON",
-                  ),
+                  icon: _isMuted
+                      ? FontAwesomeIcons.volumeXmark
+                      : FontAwesomeIcons.volumeHigh,
+                  text: _isMuted ? "OFF" : "ON",
                 ),
                 Gaps.v24,
                 CircleAvatar(
@@ -343,23 +346,23 @@ class VideoPostState extends ConsumerState<VideoPost>
                 ),
                 Gaps.v24,
                 VideoButton(
+                  onTap: _onLikeTap,
                   icon: FontAwesomeIcons.solidHeart,
                   text: S.of(context).likeCount(
                         widget.videoData.likes,
                       ),
                 ),
                 Gaps.v24,
-                GestureDetector(
+                VideoButton(
                   onTap: () => _onCommentsTap(context),
-                  child: VideoButton(
-                    icon: FontAwesomeIcons.solidComment,
-                    text: S.of(context).commentCount(
-                          widget.videoData.comments,
-                        ),
-                  ),
+                  icon: FontAwesomeIcons.solidComment,
+                  text: S.of(context).commentCount(
+                        widget.videoData.comments,
+                      ),
                 ),
                 Gaps.v24,
-                const VideoButton(
+                VideoButton(
+                  onTap: () {},
                   icon: FontAwesomeIcons.share,
                   text: "Share",
                 )
