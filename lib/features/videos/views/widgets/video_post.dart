@@ -5,6 +5,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:marquee/marquee.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
+import 'package:tiktok_clone/features/videos/models/video_model.dart';
 import 'package:tiktok_clone/features/videos/view_models/playback_config_vm.dart';
 import 'package:tiktok_clone/features/videos/views/widgets/video_button.dart';
 import 'package:tiktok_clone/features/videos/views/widgets/video_comments.dart';
@@ -27,11 +28,13 @@ const keywords = [
 class VideoPost extends ConsumerStatefulWidget {
   final int index;
   final Function onVideoFinished;
+  final VideoModel videoData;
 
   const VideoPost({
     super.key,
     required this.index,
     required this.onVideoFinished,
+    required this.videoData,
   });
 
   @override
@@ -178,8 +181,9 @@ class VideoPostState extends ConsumerState<VideoPost>
           Positioned.fill(
             child: _videoPlayerController.value.isInitialized
                 ? VideoPlayer(_videoPlayerController)
-                : Container(
-                    color: Colors.black,
+                : Image.network(
+                    widget.videoData.thumbnailUrl,
+                    fit: BoxFit.cover,
                   ),
           ),
           Positioned.fill(
@@ -217,18 +221,18 @@ class VideoPostState extends ConsumerState<VideoPost>
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
-                  "@username",
-                  style: TextStyle(
+                Text(
+                  "@${widget.videoData.creator}",
+                  style: const TextStyle(
                     fontSize: Sizes.size20,
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
                 Gaps.v10,
-                const Text(
-                  "video description",
-                  style: TextStyle(
+                Text(
+                  widget.videoData.description,
+                  style: const TextStyle(
                     fontSize: Sizes.size16,
                     color: Colors.white,
                   ),
@@ -328,26 +332,30 @@ class VideoPostState extends ConsumerState<VideoPost>
                   ),
                 ),
                 Gaps.v24,
-                const CircleAvatar(
+                CircleAvatar(
                   radius: 25,
                   backgroundColor: Colors.black,
                   foregroundColor: Colors.white,
                   foregroundImage: NetworkImage(
-                    "https://avatars.githubusercontent.com/u/3612017",
+                    "https://firebasestorage.googleapis.com/v0/b/tiktok-clone-jrsky723.appspot.com/o/avatars%2F${widget.videoData.creatorUid}?alt=media&haha=${DateTime.now().toString()}",
                   ),
-                  child: Text("니꼬"),
+                  child: Text(widget.videoData.creator),
                 ),
                 Gaps.v24,
                 VideoButton(
                   icon: FontAwesomeIcons.solidHeart,
-                  text: S.of(context).likeCount(9890909),
+                  text: S.of(context).likeCount(
+                        widget.videoData.likes,
+                      ),
                 ),
                 Gaps.v24,
                 GestureDetector(
                   onTap: () => _onCommentsTap(context),
                   child: VideoButton(
                     icon: FontAwesomeIcons.solidComment,
-                    text: S.of(context).commentCount(3424352),
+                    text: S.of(context).commentCount(
+                          widget.videoData.comments,
+                        ),
                   ),
                 ),
                 Gaps.v24,
