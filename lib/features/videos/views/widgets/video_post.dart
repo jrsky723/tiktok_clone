@@ -52,6 +52,8 @@ class VideoPostState extends ConsumerState<VideoPost>
   bool _isPaused = false;
   bool _isMoreTagsShowed = false;
   bool _isMuted = false;
+  bool _isLiked = false;
+  int _likeCount = 0;
 
   final Iterable<String> _tags = keywords.map((tag) => "#$tag");
   late final String _tagString;
@@ -66,7 +68,11 @@ class VideoPostState extends ConsumerState<VideoPost>
   }
 
   void _onLikeTap() {
-    ref.read(videoPostProvider(widget.videoData.id).notifier).likeVideo();
+    setState(() {
+      _isLiked = !_isLiked;
+      _likeCount = _isLiked ? _likeCount + 1 : _likeCount - 1;
+    });
+    ref.read(videoPostProvider(widget.videoData.id).notifier).toggleLikeVideo();
   }
 
   void _initVideoPlayer() async {
@@ -89,11 +95,19 @@ class VideoPostState extends ConsumerState<VideoPost>
     });
   }
 
+  Future<void> _initLiked() async {
+    _isLiked = await ref
+        .read(videoPostProvider(widget.videoData.id).notifier)
+        .isLikedVideo();
+    _likeCount = widget.videoData.likes;
+  }
+
   @override
   void initState() {
     super.initState();
 
     _initVideoPlayer();
+    _initLiked();
 
     _tagString = _tags.reduce((value, element) => "$value $element");
 
@@ -349,8 +363,9 @@ class VideoPostState extends ConsumerState<VideoPost>
                   onTap: _onLikeTap,
                   icon: FontAwesomeIcons.solidHeart,
                   text: S.of(context).likeCount(
-                        widget.videoData.likes,
+                        _likeCount,
                       ),
+                  color: _isLiked ? Colors.red : Colors.white,
                 ),
                 Gaps.v24,
                 VideoButton(

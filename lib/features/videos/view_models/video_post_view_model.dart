@@ -9,14 +9,19 @@ class VideoPostViewModel extends FamilyAsyncNotifier<void, String> {
   late final String _videoId;
 
   @override
-  FutureOr<void> build(String videoId) {
-    _videoId = videoId;
+  FutureOr<void> build(String arg) {
+    _videoId = arg;
     _repository = ref.read(videosRepo);
   }
 
-  Future<void> likeVideo() async {
+  Future<void> toggleLikeVideo() async {
     final user = ref.read(authRepo).user;
-    await _repository.likeVideo(_videoId, user!.uid);
+    await _repository.toggleLikeVideo(_videoId, user!.uid);
+  }
+
+  Future<bool> isLikedVideo() async {
+    final user = ref.read(authRepo).user;
+    return _repository.isLikedVideo(_videoId, user!.uid);
   }
 }
 
