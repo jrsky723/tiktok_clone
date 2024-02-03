@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
+import 'package:tiktok_clone/features/inbox/view_models/message_view_model.dart';
 import 'package:tiktok_clone/utils.dart';
 
-class ChatDetailScreen extends StatefulWidget {
+class ChatDetailScreen extends ConsumerStatefulWidget {
   static const String routeName = "chatDetail";
   static const String routeURL = ":chatId";
 
@@ -16,10 +18,10 @@ class ChatDetailScreen extends StatefulWidget {
   });
 
   @override
-  State<ChatDetailScreen> createState() => _ChatDetailScreenState();
+  ConsumerState<ChatDetailScreen> createState() => _ChatDetailScreenState();
 }
 
-class _ChatDetailScreenState extends State<ChatDetailScreen> {
+class _ChatDetailScreenState extends ConsumerState<ChatDetailScreen> {
   final TextEditingController _textEditingController = TextEditingController();
 
   String _message = "";
@@ -40,8 +42,9 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
     super.dispose();
   }
 
-  void _sendMessage() {
+  void _onSendPress() {
     if (_message.isNotEmpty) {
+      ref.read(messagesProvider.notifier).sendMessage(_message);
       _textEditingController.clear();
       setState(() {
         _message = "";
@@ -56,6 +59,7 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final isLoading = ref.watch(messagesProvider).isLoading;
     final isDark = isDarkMode(context);
     return Scaffold(
       appBar: AppBar(
@@ -197,14 +201,8 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
                             color: Colors.grey.shade500,
                           ),
                           border: const OutlineInputBorder(
-                            borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(
-                                Sizes.size20,
-                              ),
-                              topRight: Radius.circular(
-                                Sizes.size20,
-                              ),
-                              bottomLeft: Radius.circular(
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(
                                 Sizes.size20,
                               ),
                             ),
@@ -233,7 +231,7 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
                     ),
                     Gaps.h16,
                     GestureDetector(
-                      onTap: _sendMessage,
+                      onTap: isLoading ? null : _onSendPress,
                       child: Container(
                         padding: const EdgeInsets.all(
                           Sizes.size8,
@@ -246,8 +244,10 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
                               : Theme.of(context).primaryColor,
                           shape: BoxShape.circle,
                         ),
-                        child: const FaIcon(
-                          FontAwesomeIcons.solidPaperPlane,
+                        child: FaIcon(
+                          isLoading
+                              ? FontAwesomeIcons.hourglass
+                              : FontAwesomeIcons.paperPlane,
                           size: Sizes.size20,
                         ),
                       ),
