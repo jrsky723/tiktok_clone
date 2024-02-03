@@ -95,7 +95,7 @@ class VideoPostState extends ConsumerState<VideoPost>
     });
   }
 
-  Future<void> _initLiked() async {
+  void _initLiked() async {
     _isLiked = await ref
         .read(videoPostProvider(widget.videoData.id).notifier)
         .isLikedVideo();
