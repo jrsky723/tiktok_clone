@@ -123,7 +123,7 @@ class _ChatDetailScreenState extends ConsumerState<ChatDetailScreen> {
         onTap: _unFocus,
         child: Stack(
           children: [
-            ref.watch(chatProvider).when(
+            ref.watch(chatProvider(widget.chatId)).when(
                   data: (data) {
                     return ListView.separated(
                       reverse: true,
