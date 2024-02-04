@@ -9,7 +9,7 @@ class MessagesRepo {
     await _db
         .collection('chat_rooms')
         .doc('T7ZhQCP2X4fUkAa128jx')
-        .collection("texts")
+        .collection('texts')
         .add(
           message.toJson(),
         );
