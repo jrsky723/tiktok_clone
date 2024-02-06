@@ -26,6 +26,27 @@ class UserRepository {
   Future<void> updateUser(String uid, Map<String, dynamic> data) async {
     await _db.collection("users").doc(uid).update(data);
   }
+
+  Future<QuerySnapshot<Map<String, dynamic>>> fetchUsers({
+    required String name,
+    String? lastUid,
+  }) async {
+    Query<Map<String, dynamic>> query = _db
+        .collection("users")
+        .where("name", isGreaterThanOrEqualTo: name)
+        .where("name", isLessThan: "${name}z")
+        .orderBy("name")
+        .limit(5);
+
+    if (lastUid != null) {
+      final lastDoc = await _db.collection("users").doc(lastUid).get();
+      if (lastDoc.exists) {
+        query = query.startAfterDocument(lastDoc);
+      }
+    }
+
+    return query.get();
+  }
 }
 
 final userRepo = Provider(

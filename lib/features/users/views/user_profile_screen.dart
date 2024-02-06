@@ -12,12 +12,10 @@ import 'package:tiktok_clone/features/users/views/widgets/persistent_tab_bar.dar
 import 'package:tiktok_clone/features/users/views/widgets/social_stats.dart';
 
 class UserProfileScreen extends ConsumerStatefulWidget {
-  final String username;
   final String tab;
 
   const UserProfileScreen({
     super.key,
-    required this.username,
     required this.tab,
   });
 

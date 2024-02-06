@@ -65,8 +65,14 @@ final routerProvider = Provider(
               path: ChatDetailScreen.routeURL,
               name: ChatDetailScreen.routeName,
               builder: (context, state) {
-                final chatId = state.params["chatId"]!;
-                return ChatDetailScreen(chatId: chatId);
+                final chatRoomId = state.params["chatRoomId"]!;
+                final args = state.extra as ChatDetailScreenArgs;
+                return ChatDetailScreen(
+                  chatRoomId: chatRoomId,
+                  userId: args.userId,
+                  userName: args.userName,
+                  hasAvatar: args.hasAvatar,
+                );
               },
             )
           ],

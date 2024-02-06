@@ -81,3 +81,39 @@ export const onLikedRemoved = functions.firestore
       .doc(videoId)
       .delete();
   });
+
+export const onChatRoomUpdated = functions.firestore
+  .document("chat_rooms/{chatRoomId}")
+  .onUpdate(async (snapshot, context) => {
+    const db = admin.firestore();
+    const chatRoom = snapshot.after.data();
+    const personA = chatRoom.personA;
+    const personB = chatRoom.personB;
+    const lastMessage = chatRoom.lastMessage;
+    const lastMessageAt = chatRoom.lastMessageAt;
+    const lastMessageBy = chatRoom.lastMessageBy;
+
+    await db
+      .collection("users")
+      .doc(personB)
+      .collection("chat_rooms")
+      .doc(personA)
+      .update({
+        lastMessage: lastMessage,
+        lastMessageAt: lastMessageAt,
+        lastMessageBy: lastMessageBy,
+      });
+
+    if (personA === personB) return;
+
+    await db
+      .collection("users")
+      .doc(personA)
+      .collection("chat_rooms")
+      .doc(personB)
+      .update({
+        lastMessage: lastMessage,
+        lastMessageAt: lastMessageAt,
+        lastMessageBy: lastMessageBy,
+      });
+  });

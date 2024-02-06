@@ -4,18 +4,37 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/features/authentication/repos/authentication_repo.dart';
+import 'package:tiktok_clone/features/inbox/models/message.dart';
 import 'package:tiktok_clone/features/inbox/view_models/message_view_model.dart';
 import 'package:tiktok_clone/utils.dart';
 
+class ChatDetailScreenArgs {
+  final String userId;
+  final String userName;
+  final bool hasAvatar;
+
+  const ChatDetailScreenArgs({
+    required this.userId,
+    required this.userName,
+    required this.hasAvatar,
+  });
+}
+
 class ChatDetailScreen extends ConsumerStatefulWidget {
   static const String routeName = "chatDetail";
-  static const String routeURL = ":chatId";
+  static const String routeURL = ":chatRoomId";
 
-  final String chatId;
+  final String chatRoomId;
+  final String userId;
+  final String userName;
+  final bool hasAvatar;
 
   const ChatDetailScreen({
     super.key,
-    required this.chatId,
+    required this.chatRoomId,
+    required this.userId,
+    required this.userName,
+    required this.hasAvatar,
   });
 
   @override
@@ -45,11 +64,46 @@ class _ChatDetailScreenState extends ConsumerState<ChatDetailScreen> {
 
   void _onSendPress() {
     if (_message.isNotEmpty) {
-      ref.read(messagesProvider.notifier).sendMessage(_message);
+      ref.read(messagesProvider.notifier).sendMessage(
+            text: _message,
+            chatRoomId: widget.chatRoomId,
+            otherUserId: widget.userId,
+          );
       _textEditingController.clear();
       setState(() {
         _message = "";
       });
+    }
+  }
+
+  void _onMessageLongPress(MessageModel message) {
+    if (isWithin2Minutes(message.createdAt)) {
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: const Text("Delete message"),
+            content:
+                const Text("Are you sure you want to delete this message?"),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: const Text("Cancel"),
+              ),
+              TextButton(
+                onPressed: () {
+                  ref.read(messagesProvider.notifier).deleteMessage(
+                      chatRoomId: widget.chatRoomId, message: message);
+                  Navigator.pop(context);
+                },
+                child: const Text("Delete"),
+              ),
+            ],
+          );
+        },
+      );
     }
   }
 
@@ -68,14 +122,20 @@ class _ChatDetailScreenState extends ConsumerState<ChatDetailScreen> {
           horizontalTitleGap: Sizes.size8,
           leading: Stack(
             children: [
-              const Padding(
-                padding: EdgeInsets.all(
+              Padding(
+                padding: const EdgeInsets.all(
                   Sizes.size2,
                 ),
                 child: CircleAvatar(
                   radius: Sizes.size24,
-                  backgroundImage: NetworkImage(
-                      "https://avatars.githubusercontent.com/u/3612017"),
+                  backgroundImage: widget.hasAvatar
+                      ? NetworkImage(
+                          "https://firebasestorage.googleapis.com/v0/b/tiktok-clone-jrsky723.appspot.com/o/avatars%2F${widget.userId}?alt=media",
+                        )
+                      : null,
+                  child: Text(
+                    widget.userName,
+                  ),
                 ),
               ),
               Positioned(
@@ -97,10 +157,11 @@ class _ChatDetailScreenState extends ConsumerState<ChatDetailScreen> {
             ],
           ),
           title: Text(
-            "니꼬 (${widget.chatId})",
+            widget.userName,
             style: const TextStyle(
               fontWeight: FontWeight.w600,
             ),
+            overflow: TextOverflow.ellipsis,
           ),
           subtitle: const Text("Active now"),
           trailing: const Row(
@@ -123,8 +184,13 @@ class _ChatDetailScreenState extends ConsumerState<ChatDetailScreen> {
         onTap: _unFocus,
         child: Stack(
           children: [
-            ref.watch(chatProvider(widget.chatId)).when(
+            ref.watch(chatProvider(widget.chatRoomId)).when(
                   data: (data) {
+                    if (data.isEmpty) {
+                      return const Center(
+                        child: Text("No messages"),
+                      );
+                    }
                     return ListView.separated(
                       reverse: true,
                       padding: EdgeInsets.only(
@@ -143,39 +209,35 @@ class _ChatDetailScreenState extends ConsumerState<ChatDetailScreen> {
                           mainAxisAlignment: isMine
                               ? MainAxisAlignment.end
                               : MainAxisAlignment.start,
-                          children: [
-                            Container(
-                              padding: const EdgeInsets.all(
-                                Sizes.size14,
-                              ),
-                              decoration: BoxDecoration(
-                                color: isMine
-                                    ? Colors.blue
-                                    : Theme.of(context).primaryColor,
-                                borderRadius: BorderRadius.only(
-                                  topLeft: const Radius.circular(
-                                    Sizes.size20,
+                          children: isMine
+                              ? [
+                                  Text(
+                                    convertTimeStampToTime(message.createdAt),
+                                    style: TextStyle(
+                                      color: isDark
+                                          ? Colors.grey.shade400
+                                          : Colors.grey.shade600,
+                                      fontSize: Sizes.size12,
+                                    ),
                                   ),
-                                  topRight: const Radius.circular(
-                                    Sizes.size20,
+                                  Gaps.h8,
+                                  _buildMessageContainer(
+                                      isMine, message, context, isLoading),
+                                ]
+                              : [
+                                  _buildMessageContainer(
+                                      isMine, message, context, isLoading),
+                                  Gaps.h8,
+                                  Text(
+                                    convertTimeStampToTime(message.createdAt),
+                                    style: TextStyle(
+                                      color: isDark
+                                          ? Colors.grey.shade400
+                                          : Colors.grey.shade600,
+                                      fontSize: Sizes.size12,
+                                    ),
                                   ),
-                                  bottomLeft: Radius.circular(
-                                    isMine ? Sizes.size20 : Sizes.size5,
-                                  ),
-                                  bottomRight: Radius.circular(
-                                    isMine ? Sizes.size5 : Sizes.size20,
-                                  ),
-                                ),
-                              ),
-                              child: Text(
-                                message.text,
-                                style: const TextStyle(
-                                  color: Colors.white,
-                                  fontSize: Sizes.size16,
-                                ),
-                              ),
-                            ),
-                          ],
+                                ],
                         );
                       },
                       separatorBuilder: (context, index) => Gaps.v10,
@@ -276,6 +338,44 @@ class _ChatDetailScreenState extends ConsumerState<ChatDetailScreen> {
               ),
             ),
           ],
+        ),
+      ),
+    );
+  }
+
+  GestureDetector _buildMessageContainer(
+      bool isMine, MessageModel message, BuildContext context, bool isLoading) {
+    return GestureDetector(
+      onLongPress: isMine && !message.isDeleted && !isLoading
+          ? () => _onMessageLongPress(message)
+          : null,
+      child: Container(
+        padding: const EdgeInsets.all(
+          Sizes.size14,
+        ),
+        decoration: BoxDecoration(
+          color: isMine ? Colors.blue : Theme.of(context).primaryColor,
+          borderRadius: BorderRadius.only(
+            topLeft: const Radius.circular(
+              Sizes.size20,
+            ),
+            topRight: const Radius.circular(
+              Sizes.size20,
+            ),
+            bottomLeft: Radius.circular(
+              isMine ? Sizes.size20 : Sizes.size5,
+            ),
+            bottomRight: Radius.circular(
+              isMine ? Sizes.size5 : Sizes.size20,
+            ),
+          ),
+        ),
+        child: Text(
+          message.text,
+          style: const TextStyle(
+            color: Colors.white,
+            fontSize: Sizes.size16,
+          ),
         ),
       ),
     );
