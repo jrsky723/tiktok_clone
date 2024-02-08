@@ -25,7 +25,6 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
-
   // await SystemChrome.setPreferredOrientations(
   //   [
   //     DeviceOrientation.portraitUp,
