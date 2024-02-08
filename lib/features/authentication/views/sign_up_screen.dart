@@ -5,26 +5,27 @@ import 'package:go_router/go_router.dart';
 import 'package:tiktok_clone/constants/breakpoints.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
-import 'package:tiktok_clone/features/authentication/login_form_screen.dart';
-import 'package:tiktok_clone/features/authentication/sign_up_screen.dart';
+import 'package:tiktok_clone/features/authentication/views/login_screen.dart';
+import 'package:tiktok_clone/features/authentication/views/username_screen.dart';
 import 'package:tiktok_clone/features/authentication/view_models/social_auth_view_model.dart';
-import 'package:tiktok_clone/features/authentication/widgets/auth_button.dart';
+import 'package:tiktok_clone/features/authentication/views/widgets/auth_button.dart';
 import 'package:tiktok_clone/generated/l10n.dart';
 
-class LoginScreen extends ConsumerWidget {
-  static String routeName = "/login";
-  static String routeURL = "/login";
-  const LoginScreen({super.key});
+class SignUpScreen extends ConsumerWidget {
+  static String routeURL = "/";
+  static String routeName = "signUp";
 
-  void _onSignUpTap(BuildContext context) {
-    context.pushNamed(SignUpScreen.routeName);
+  const SignUpScreen({super.key});
+
+  void _onLoginTap(BuildContext context) async {
+    context.pushNamed(LoginScreen.routeName);
   }
 
-  void _onEmailLoginTap(BuildContext context) {
+  void _onEmailTap(BuildContext context) {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => const LoginFormScreen(),
+        builder: (context) => const UsernameScreen(),
       ),
     );
   }
@@ -34,6 +35,13 @@ class LoginScreen extends ConsumerWidget {
     final width = MediaQuery.of(context).size.width;
     return OrientationBuilder(
       builder: (context, orientation) {
+        // if (orientation == Orientation.landscape) {
+        //   return const Scaffold(
+        //     body: Center(
+        //       child: Text("Plz rotate ur phone."),
+        //     ),
+        //   );
+        // }
         return Scaffold(
           body: SafeArea(
             child: Padding(
@@ -44,7 +52,7 @@ class LoginScreen extends ConsumerWidget {
                 children: [
                   Gaps.v80,
                   Text(
-                    S.of(context).loginTitle("TikTok"),
+                    S.of(context).signUpTitle("TikTok", DateTime.now()),
                     style: const TextStyle(
                       fontSize: Sizes.size24,
                       fontWeight: FontWeight.w700,
@@ -54,7 +62,7 @@ class LoginScreen extends ConsumerWidget {
                   Opacity(
                     opacity: 0.5,
                     child: Text(
-                      S.of(context).loginSubtitle,
+                      S.of(context).signUpSubtitle(19687),
                       style: const TextStyle(
                         fontSize: Sizes.size16,
                       ),
@@ -69,7 +77,7 @@ class LoginScreen extends ConsumerWidget {
                         AuthButton(
                           icon: const FaIcon(FontAwesomeIcons.user),
                           text: S.of(context).emailPasswordButton,
-                          onTap: () => _onEmailLoginTap(context),
+                          onTap: () => _onEmailTap(context),
                         ),
                         Gaps.v16,
                         AuthButton(
@@ -88,7 +96,7 @@ class LoginScreen extends ConsumerWidget {
                           child: AuthButton(
                             icon: const FaIcon(FontAwesomeIcons.user),
                             text: S.of(context).emailPasswordButton,
-                            onTap: () => _onEmailLoginTap(context),
+                            onTap: () => _onEmailTap(context),
                           ),
                         ),
                         Gaps.h16,
@@ -102,7 +110,7 @@ class LoginScreen extends ConsumerWidget {
                           ),
                         ),
                       ],
-                    ),
+                    )
                 ],
               ),
             ),
@@ -118,9 +126,9 @@ class LoginScreen extends ConsumerWidget {
                 TextButton(
                   onPressed: () {},
                   child: GestureDetector(
-                    onTap: () => _onSignUpTap(context),
+                    onTap: () => _onLoginTap(context),
                     child: Text(
-                      S.of(context).signUp,
+                      S.of(context).logIn,
                       style: TextStyle(
                         fontWeight: FontWeight.w600,
                         color: Theme.of(context).primaryColor,

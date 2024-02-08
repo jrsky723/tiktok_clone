@@ -1,50 +1,50 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
-import 'package:tiktok_clone/features/authentication/email_screen.dart';
 import 'package:tiktok_clone/features/authentication/view_models/signup_view_model.dart';
-import 'package:tiktok_clone/features/authentication/widgets/form_button.dart';
+import 'package:tiktok_clone/features/authentication/views/widgets/form_button.dart';
 
-class UsernameScreen extends ConsumerStatefulWidget {
-  const UsernameScreen({super.key});
+class BirthdayScreen extends ConsumerStatefulWidget {
+  const BirthdayScreen({super.key});
 
   @override
-  ConsumerState<UsernameScreen> createState() => _UsernameScreenState();
+  ConsumerState<BirthdayScreen> createState() => _BirthdayScreenState();
 }
 
-class _UsernameScreenState extends ConsumerState<UsernameScreen> {
-  final TextEditingController _usernameController = TextEditingController();
+class _BirthdayScreenState extends ConsumerState<BirthdayScreen> {
+  final TextEditingController _birthdayController = TextEditingController();
 
-  String _username = "";
+  late DateTime initialDate;
 
   @override
   void initState() {
     super.initState();
-    _usernameController.addListener(() {
-      setState(() {
-        _username = _usernameController.text;
-      });
-    });
+    DateTime now = DateTime.now();
+    initialDate = DateTime(now.year - 12, now.month, now.day);
+    _setTextFieldDate(initialDate);
   }
 
   @override
   void dispose() {
-    _usernameController.dispose();
+    _birthdayController.dispose();
     super.dispose();
   }
 
-  void _onNextTap() {
-    if (_username.isEmpty) return;
-    updateForm(ref: ref, key: "name", value: _username);
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => EmailScreen(
-          username: _username,
-        ),
-      ),
+  Future<void> _onNextTap() async {
+    if (_birthdayController.text.isEmpty) return;
+    updateForm(
+      ref: ref,
+      key: "birthday",
+      value: _birthdayController.text,
     );
+    await ref.read(signUpProvider.notifier).signUp(context);
+  }
+
+  void _setTextFieldDate(DateTime date) {
+    final textDate = date.toString().split(" ").first;
+    _birthdayController.value = TextEditingValue(text: textDate);
   }
 
   @override
@@ -64,7 +64,7 @@ class _UsernameScreenState extends ConsumerState<UsernameScreen> {
           children: [
             Gaps.v40,
             const Text(
-              "Create username",
+              "When's your birthday?",
               style: TextStyle(
                 fontSize: Sizes.size24,
                 fontWeight: FontWeight.w700,
@@ -74,7 +74,7 @@ class _UsernameScreenState extends ConsumerState<UsernameScreen> {
             const Opacity(
               opacity: 0.5,
               child: Text(
-                "You can always change this later.",
+                "Your birthday won't be shown publicly.",
                 style: TextStyle(
                   fontSize: Sizes.size16,
                 ),
@@ -82,9 +82,9 @@ class _UsernameScreenState extends ConsumerState<UsernameScreen> {
             ),
             Gaps.v16,
             TextField(
-              controller: _usernameController,
+              enabled: false,
+              controller: _birthdayController,
               decoration: InputDecoration(
-                hintText: "Username",
                 enabledBorder: UnderlineInputBorder(
                   borderSide: BorderSide(
                     color: Colors.grey.shade400,
@@ -100,11 +100,20 @@ class _UsernameScreenState extends ConsumerState<UsernameScreen> {
             ),
             Gaps.v28,
             FormButton(
-              disabled: _username.isEmpty,
+              disabled: ref.watch(signUpProvider).isLoading,
               text: "Next",
               onTap: _onNextTap,
             ),
           ],
+        ),
+      ),
+      bottomNavigationBar: SizedBox(
+        height: 300,
+        child: CupertinoDatePicker(
+          maximumDate: initialDate,
+          initialDateTime: initialDate,
+          mode: CupertinoDatePickerMode.date,
+          onDateTimeChanged: _setTextFieldDate,
         ),
       ),
     );
